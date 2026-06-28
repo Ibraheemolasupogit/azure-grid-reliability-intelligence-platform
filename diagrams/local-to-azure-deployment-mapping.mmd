@@ -1,0 +1,23 @@
+flowchart TB
+    subgraph local["Local-first implementation"]
+        simulator["JSONL/event simulator<br/>(planned)"]
+        consumers["Python consumers<br/>(planned)"]
+        filesystem["Local filesystem zones"]
+        logs["Structured logs"]
+        local_outputs["CSV/Parquet outputs<br/>(planned)"]
+    end
+
+    subgraph azure["Azure target architecture"]
+        hubs["Azure Event Hubs"]
+        functions["Azure Stream Analytics or Functions"]
+        adls["Azure Data Lake Storage Gen2"]
+        monitor["Azure Monitor / Application Insights"]
+        powerbi["Microsoft Power BI"]
+    end
+
+    simulator -. maps to .-> hubs
+    consumers -. maps to .-> functions
+    filesystem -. maps to .-> adls
+    logs -. maps to .-> monitor
+    local_outputs -. maps to .-> powerbi
+

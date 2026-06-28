@@ -1,0 +1,11 @@
+flowchart LR
+    local_inputs["Planned synthetic inputs<br/>JSONL and CSV"]
+    local_ingestion["Local Python ingestion<br/>(future milestone)"]
+    local_validation["Validation and quality controls<br/>(future milestone)"]
+    local_storage["Local filesystem zones<br/>raw, interim, processed"]
+    analytics["Analytical tables and metrics<br/>(future milestone)"]
+    outputs["Power BI-ready outputs<br/>(future milestone)"]
+
+    local_inputs --> local_ingestion --> local_validation --> local_storage
+    local_storage --> analytics --> outputs
+

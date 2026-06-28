@@ -1,0 +1,48 @@
+project:
+  name: azure-grid-reliability-intelligence-platform
+  package: grid_reliability
+  description: Local-first Azure-mapped grid reliability intelligence platform.
+
+runtime:
+  environment: local
+  timezone: Europe/London
+  random_seed: 42
+
+paths:
+  data_root: data
+  output_root: outputs
+  raw_data: data/raw
+  interim_data: data/interim
+  processed_data: data/processed
+  reports: reports
+
+logging:
+  level: INFO
+  json: false
+
+pipeline_components:
+  planned:
+    - data_generation
+    - ingestion
+    - validation
+    - forecasting
+    - asset_health
+    - outage_prediction
+    - reliability
+    - anomaly_detection
+    - genai
+    - reporting
+    - monitoring
+
+azure_service_mapping:
+  meter_ingestion: Azure Event Hubs
+  raw_storage: Azure Data Lake Storage Gen2
+  stream_processing: Azure Stream Analytics or Azure Functions
+  analytical_warehouse: Azure Synapse Analytics
+  time_series_analytics: Azure Data Explorer
+  ml_lifecycle: Azure Machine Learning
+  genai_operations_assistant: Azure AI Foundry
+  monitoring: Azure Monitor and Application Insights
+  reporting: Microsoft Power BI
+  governance: Microsoft Purview
+

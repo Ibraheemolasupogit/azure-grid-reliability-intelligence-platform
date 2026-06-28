@@ -1,0 +1,19 @@
+flowchart TD
+    sources["Smart meters, substations, weather, maintenance systems"]
+    event_hubs["Azure Event Hubs<br/>(planned cloud target)"]
+    stream["Stream processing and data-quality controls<br/>(planned)"]
+    lake["Azure Data Lake Storage Gen2<br/>(planned cloud target)"]
+    adx["Azure Data Explorer<br/>(planned)"]
+    synapse["Azure Synapse Analytics<br/>(planned)"]
+    aml["Azure Machine Learning<br/>(planned)"]
+    intelligence["Forecasting, asset risk, outage intelligence<br/>(planned)"]
+    operations["Power BI, Azure Monitor, Grid Operations Copilot<br/>(planned)"]
+    users["Operators and decision-makers"]
+
+    sources --> event_hubs --> stream --> lake
+    lake --> adx
+    lake --> synapse
+    adx --> aml
+    synapse --> aml
+    aml --> intelligence --> operations --> users
+
