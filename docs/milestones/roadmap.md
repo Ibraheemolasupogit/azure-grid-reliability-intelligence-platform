@@ -14,7 +14,9 @@ Implemented deterministic fictional source datasets include `smart_meter_events.
 
 ## Milestone 3: Ingestion and Data Quality
 
-Planned local ingestion, schema validation, data-quality checks, and partitioned storage conventions.
+Status: implemented.
+
+Implemented local source discovery, manifest verification, CSV and JSON Lines readers, contract validation, relationship validation, duplicate handling, interim JSONL outputs, quarantine JSONL outputs, metrics, audit manifests, quality reports, CLI exit semantics, and a finite local event-oriented reader abstraction.
 
 ## Milestone 4: Forecasting and Reliability Analytics
 
@@ -30,4 +32,4 @@ Planned Power BI-ready outputs, monitoring views, incident investigation workflo
 
 ## Milestone 7: Azure Deployment Guidance
 
-Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestone 1.
+Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 3.

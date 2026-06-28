@@ -1,0 +1,13 @@
+flowchart TD
+    sources["Synthetic sources"]
+    manifest["Manifest verification"]
+    readers["Format readers"]
+    contract["Contract validation"]
+    relationships["Relationship validation"]
+    interim["Interim valid"]
+    quarantine["Quarantine"]
+    reports["Metrics, audit manifest, quality report"]
+
+    sources --> manifest --> readers --> contract --> relationships
+    relationships --> interim --> reports
+    relationships --> quarantine --> reports

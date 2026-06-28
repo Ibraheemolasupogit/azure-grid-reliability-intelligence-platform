@@ -8,12 +8,16 @@ The platform is designed to demonstrate engineering patterns locally before clou
 - Environment validation.
 - Path resolution.
 - Logging setup.
+- Deterministic synthetic data generation.
+- Manifest verification.
+- CSV and JSON Lines ingestion.
+- Contract, duplicate, dataset, and relationship validation.
+- Interim JSONL and quarantine JSONL persistence.
+- Ingestion metrics, audit manifests, and Markdown quality reports.
 - Tests and static quality checks.
 
 ## What Is Planned Locally
 
-- Synthetic event and batch data generation.
-- Local ingestion and validation pipelines.
 - Local analytical tables and ML training workflows.
 - Local metrics, reporting extracts, and investigation workflows.
 
@@ -24,5 +28,4 @@ The platform is designed to demonstrate engineering patterns locally before clou
 - Synapse, Azure Data Explorer, Azure Machine Learning, Azure Monitor, Power BI, Purview, and Azure AI Foundry resources.
 - Identity, networking, RBAC, private endpoints, and production-grade observability.
 
-Local simulations will demonstrate architecture and delivery patterns, not live Azure deployment.
-
+Local simulations demonstrate architecture and delivery patterns, not live Azure deployment.

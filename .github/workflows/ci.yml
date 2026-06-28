@@ -40,5 +40,31 @@ jobs:
       - name: Generate synthetic data with CI profile
         run: python -m grid_reliability.data_generation.pipeline --config configs/synthetic_data_ci.yaml
 
+      - name: Ingest and validate synthetic data with CI profile
+        run: python -m grid_reliability.ingestion.pipeline --config configs/ingestion_ci.yaml
+
+      - name: Verify ingestion outputs
+        run: |
+          test -s data/interim/smart_meter_events.jsonl
+          test -s data/interim/substation_events.jsonl
+          test -s data/interim/weather_data.jsonl
+          test -s data/interim/asset_inventory.jsonl
+          test -s data/interim/maintenance_logs.jsonl
+          test -s data/interim/outage_history.jsonl
+          test -s reports/ingestion/local-ci/metrics.json
+          test -s reports/ingestion/local-ci/ingestion_manifest.json
+          test -s reports/ingestion/local-ci/data_quality_report.md
+
       - name: Pytest with coverage
         run: python -m pytest --cov --cov-report=term-missing
+
+      - name: Confirm runtime outputs remain untracked
+        run: |
+          git status --short --ignored data reports | grep -E '!! data/raw|!! data/interim|!! reports/ingestion'
+
+      - name: Clean generated runtime outputs
+        run: |
+          make clean-data
+          make clean-interim
+          make clean-quarantine
+          make clean-ingestion-reports

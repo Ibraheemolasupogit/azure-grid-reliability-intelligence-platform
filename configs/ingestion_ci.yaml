@@ -1,0 +1,17 @@
+profile: ci
+source_root: data/raw
+interim_root: data/interim
+quarantine_root: data/quarantine
+report_root: reports/ingestion
+contract_root: configs/data_contracts
+manifest_filename: _manifest.json
+verify_manifest_checksums: true
+require_manifest: true
+fail_on_missing_dataset: true
+fail_on_contract_error: true
+maximum_error_rate: 0.0
+batch_size: 25
+timezone: UTC
+normalised_timestamp_format: iso8601_utc
+run_id_strategy: deterministic
+write_format: jsonl

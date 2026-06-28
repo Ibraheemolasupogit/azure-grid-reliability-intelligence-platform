@@ -1,0 +1,2 @@
+weather_timestamp,grid_region,temperature_c,feels_like_c,humidity_pct,wind_speed_mps,wind_gust_mps,precipitation_mm,pressure_hpa,weather_condition,severe_weather_flag,data_source,schema_version
+not-a-timestamp,GRID-NORTH,5,3,70,2,3,0,1010,clear,false,synthetic,2.0.0

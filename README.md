@@ -2,7 +2,7 @@
 
 A local-first, Azure-mapped foundation for grid reliability and energy operations intelligence across synthetic telemetry, data quality, forecasting, asset health, outage risk, operational monitoring, and analytical reporting.
 
-This repository is currently at **Milestone 2: Governed Synthetic Energy Data Generation**. It establishes the engineering structure, shared foundations, and a deterministic generator for fictional energy operations source datasets. It does not yet run ingestion, train models, calculate reliability KPIs, build dashboards, integrate GenAI, or deploy Azure resources.
+This repository is currently at **Milestone 3: Governed Ingestion and Data Validation**. It establishes the engineering structure, shared foundations, deterministic fictional source data generation, and a local ingestion layer that validates, normalises, quarantines, and reports on synthetic datasets. It does not train models, calculate reliability KPIs, build dashboards, integrate GenAI, or deploy Azure resources.
 
 ## Problem Statement
 
@@ -49,15 +49,15 @@ Local simulations are intended to demonstrate architecture, testing, reproducibi
 
 ## Local-First and Azure Deployment
 
-Milestone 1 runs locally and requires no Azure credentials. Future milestones will implement local equivalents of cloud capabilities first, then document how each maps to Azure services. Any live Azure deployment would require a subscription, identity configuration, RBAC, networking, service provisioning, and operational monitoring outside the current milestone.
+Milestones 1 through 3 run locally and require no Azure credentials. Future milestones will implement local equivalents of cloud capabilities first, then document how each maps to Azure services. Any live Azure deployment would require a subscription, identity configuration, RBAC, networking, service provisioning, and operational monitoring outside the current milestone.
 
 ## Azure Service Mapping
 
 | Platform capability | Local-first implementation | Azure target |
 | --- | --- | --- |
-| Meter ingestion | JSONL/event simulator and Python consumers | Azure Event Hubs |
+| Meter ingestion | JSONL/event reader and Python batch pipeline | Azure Event Hubs |
 | Raw storage | Local filesystem partitioning | Azure Data Lake Storage Gen2 |
-| Stream processing | Python event-processing pipeline | Azure Stream Analytics or Azure Functions |
+| Stream processing | Finite local micro-batch abstraction | Azure Stream Analytics or Azure Functions |
 | Analytical warehouse | Local analytical tables | Azure Synapse Analytics |
 | Time-series analytics | Local Python/columnar analysis | Azure Data Explorer |
 | ML lifecycle | Local reproducible training pipelines | Azure Machine Learning |
@@ -109,6 +109,25 @@ schema_version: "2.0.0"
 ```
 
 All identifiers, locations, manufacturers, maintenance notes, and incidents are fictional. The data contains no real customers, addresses, postcodes, coordinates, utility assets, or operational systems.
+
+## Governed Ingestion and Validation
+
+Run local ingestion against generated sources:
+
+```bash
+python3 -m grid_reliability.ingestion.pipeline --config configs/ingestion.yaml
+```
+
+Run the small CI profile end to end:
+
+```bash
+python3 -m grid_reliability.data_generation.pipeline --config configs/synthetic_data_ci.yaml
+python3 -m grid_reliability.ingestion.pipeline --config configs/ingestion_ci.yaml
+```
+
+The ingestion layer verifies `_manifest.json`, checks file sizes, SHA-256 checksums and record counts, parses CSV and JSON Lines, validates contracts and relationships, writes valid JSONL outputs to `data/interim/`, writes invalid records to `data/quarantine/<run_id>/`, and writes reports to `reports/ingestion/<run_id>/`.
+
+Run statuses are `PASSED`, `PASSED_WITH_WARNINGS`, `FAILED_QUALITY_THRESHOLD`, `FAILED_MANIFEST`, `FAILED_CONFIGURATION`, and `FAILED_PROCESSING`. Failed statuses return a non-zero CLI exit code.
 
 ## Planned Analytical and ML Use Cases
 
@@ -167,7 +186,7 @@ Planned reliability measures include SAIDI, SAIFI, CAIDI, availability, outage f
 
 1. Repository foundation and architecture scaffold.
 2. Governed synthetic energy data generation.
-3. Ingestion and data quality.
+3. Governed ingestion and data validation.
 4. Forecasting and reliability analytics.
 5. Asset health, outage risk, and anomaly detection.
 6. Operations reporting and GenAI assistance.
@@ -190,7 +209,7 @@ The foundation uses Ruff, mypy, pytest, coverage, typed settings, deterministic 
 
 ## Limitations and Current Status
 
-Only Milestones 1 and 2 are implemented. The repository contains architecture scaffolding, shared foundation utilities, and synthetic source data generation. Ingestion, validation engines, analytics, forecasting, reliability calculations, dashboards, GenAI workflows, and live Azure infrastructure remain future work. Generated runtime datasets, trained models, reports, dashboards, and Azure deployment artefacts are intentionally excluded from version control.
+Only Milestones 1 through 3 are implemented. The repository contains architecture scaffolding, shared foundation utilities, synthetic source data generation, and governed local ingestion with validation, interim outputs, quarantine, metrics, and reports. Analytics, forecasting, reliability calculations, dashboards, GenAI workflows, and live Azure infrastructure remain future work. Generated runtime datasets, trained models, reports, dashboards, and Azure deployment artefacts are intentionally excluded from version control.
 
 ## Licence
 
