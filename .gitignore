@@ -37,6 +37,7 @@ Thumbs.db
 data/raw/*
 data/interim/*
 data/processed/*
+data/samples/*
 outputs/*
 reports/*
 models/
@@ -54,8 +55,11 @@ mlruns/
 !data/raw/.gitkeep
 !data/interim/.gitkeep
 !data/processed/.gitkeep
+!data/samples/.gitkeep
+!data/samples/**
 !outputs/.gitkeep
 !reports/.gitkeep
+!tests/fixtures/**
 
 # Azure and local deployment artefacts
 .azure/
@@ -63,4 +67,3 @@ azureProfile.json
 .terraform/
 terraform.tfstate*
 *.tfvars
-

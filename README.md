@@ -2,7 +2,7 @@
 
 A local-first, Azure-mapped foundation for grid reliability and energy operations intelligence across synthetic telemetry, data quality, forecasting, asset health, outage risk, operational monitoring, and analytical reporting.
 
-This repository is currently at **Milestone 1: Repository Foundation and Architecture Scaffold**. It establishes the engineering structure and shared foundations only. It does not yet generate datasets, run ingestion, train models, calculate reliability KPIs, build dashboards, integrate GenAI, or deploy Azure resources.
+This repository is currently at **Milestone 2: Governed Synthetic Energy Data Generation**. It establishes the engineering structure, shared foundations, and a deterministic generator for fictional energy operations source datasets. It does not yet run ingestion, train models, calculate reliability KPIs, build dashboards, integrate GenAI, or deploy Azure resources.
 
 ## Problem Statement
 
@@ -75,7 +75,40 @@ Milestone 1 runs locally and requires no Azure credentials. Future milestones wi
 - `maintenance_logs.csv`
 - `outage_history.csv`
 
-These datasets are planned for later milestones and are not committed in Milestone 1.
+Full generated runtime datasets are written to `data/raw/` and ignored by Git. Small deterministic fixtures live under `tests/fixtures/synthetic_data/` for tests and documentation.
+
+## Synthetic Data Generation
+
+Generate the standard local dataset profile:
+
+```bash
+python3 -m grid_reliability.data_generation.pipeline --config configs/synthetic_data.yaml
+```
+
+Generate the smaller CI/test profile:
+
+```bash
+python3 -m grid_reliability.data_generation.pipeline --config configs/synthetic_data_ci.yaml
+```
+
+The generator supports implemented overrides for `--output-root`, `--seed`, `--start`, `--end`, and `--profile`. With the same seed and configuration, dataset contents are reproducible. The `_manifest.json` file includes a generation timestamp, so the manifest itself is not byte-for-byte deterministic across runs.
+
+Example configuration:
+
+```yaml
+random_seed: 20260201
+start_timestamp: "2026-01-01T00:00:00"
+end_timestamp: "2026-01-01T06:00:00"
+meter_interval_minutes: 60
+number_of_regions: 2
+substations_per_region: 1
+feeders_per_substation: 1
+meters_per_feeder: 3
+output_root: data/raw
+schema_version: "2.0.0"
+```
+
+All identifiers, locations, manufacturers, maintenance notes, and incidents are fictional. The data contains no real customers, addresses, postcodes, coordinates, utility assets, or operational systems.
 
 ## Planned Analytical and ML Use Cases
 
@@ -133,7 +166,7 @@ Planned reliability measures include SAIDI, SAIFI, CAIDI, availability, outage f
 ## Milestone Roadmap
 
 1. Repository foundation and architecture scaffold.
-2. Synthetic operational datasets.
+2. Governed synthetic energy data generation.
 3. Ingestion and data quality.
 4. Forecasting and reliability analytics.
 5. Asset health, outage risk, and anomaly detection.
@@ -157,9 +190,8 @@ The foundation uses Ruff, mypy, pytest, coverage, typed settings, deterministic 
 
 ## Limitations and Current Status
 
-Only Milestone 1 is implemented. The repository contains architecture scaffolding and shared foundation utilities, not production pipelines or live cloud infrastructure. Generated datasets, trained models, reports, dashboards, and Azure deployment artefacts are intentionally excluded from version control.
+Only Milestones 1 and 2 are implemented. The repository contains architecture scaffolding, shared foundation utilities, and synthetic source data generation. Ingestion, validation engines, analytics, forecasting, reliability calculations, dashboards, GenAI workflows, and live Azure infrastructure remain future work. Generated runtime datasets, trained models, reports, dashboards, and Azure deployment artefacts are intentionally excluded from version control.
 
 ## Licence
 
 This project is licensed under the MIT License.
-

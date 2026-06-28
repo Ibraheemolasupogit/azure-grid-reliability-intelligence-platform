@@ -1,0 +1,3 @@
+outage_id,outage_start,restoration_time,duration_minutes,grid_region,substation_id,feeder_id,primary_asset_id,outage_type,cause_category,customers_interrupted,estimated_load_lost_mw,planned_flag,severe_weather_related,protection_operated,restoration_method,incident_severity,data_quality_flag,schema_version
+OUT-4B5A3F17E6,2026-01-01T00:17:00+00:00,2026-01-01T04:17:00+00:00,240,GRID-SOUTH,SUB-SOUTH-001,FDR-SOUTH-001-01,AST-CB-FDR-SOUTH-001-01,unplanned,equipment_failure,60,20.333,False,False,True,remote_switching,medium,GOOD,2.0.0
+OUT-85FD649E8C,2026-01-01T04:39:00+00:00,2026-01-01T07:39:00+00:00,180,GRID-NORTH,SUB-NORTH-001,FDR-NORTH-001-01,AST-CB-FDR-NORTH-001-01,unplanned,unknown,61,12.628,False,False,False,auto_reclose,high,UNKNOWN_CAUSE,2.0.0

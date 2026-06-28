@@ -1,0 +1,35 @@
+dataset: outage_history
+description: Fictional historical outage incidents for future reliability analytics.
+schema_version: "2.0.0"
+format: csv
+primary_key: outage_id
+classification: synthetic
+partitioning: grid_region/outage_month
+timestamp_semantics: restoration_time must equal outage_start plus duration_minutes.
+foreign_keys:
+  substation_id: asset_inventory.substation_id
+  feeder_id: asset_inventory.feeder_id
+  primary_asset_id: asset_inventory.asset_id
+fields:
+  - {name: outage_id, type: string, required: true}
+  - {name: outage_start, type: timestamp, required: true}
+  - {name: restoration_time, type: timestamp, required: true}
+  - {name: duration_minutes, type: integer, required: true, unit: minutes}
+  - {name: grid_region, type: string, required: true}
+  - {name: substation_id, type: string, required: true}
+  - {name: feeder_id, type: string, required: true}
+  - {name: primary_asset_id, type: string, required: true}
+  - {name: outage_type, type: string, required: true, allowed_values: [planned, unplanned]}
+  - {name: cause_category, type: string, required: true, allowed_values: [equipment_failure, severe_weather, vegetation, third-party_damage, protection_operation, overload, planned_maintenance, unknown]}
+  - {name: customers_interrupted, type: integer, required: true}
+  - {name: estimated_load_lost_mw, type: number, required: true, unit: MW}
+  - {name: planned_flag, type: boolean, required: true}
+  - {name: severe_weather_related, type: boolean, required: true}
+  - {name: protection_operated, type: boolean, required: true}
+  - {name: restoration_method, type: string, required: true, allowed_values: [remote_switching, field_repair, planned_switching, auto_reclose]}
+  - {name: incident_severity, type: string, required: true, allowed_values: [low, medium, high]}
+  - {name: data_quality_flag, type: string, required: true, allowed_values: [GOOD, UNKNOWN_CAUSE]}
+  - {name: schema_version, type: string, required: true}
+quality_expectations:
+  - outage records are incidents only; SAIDI, SAIFI, and CAIDI are not calculated in Milestone 2.
+  - every referenced network entity exists in generated source data.

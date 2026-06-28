@@ -1,0 +1,26 @@
+dataset: weather_data
+description: Fictional regional weather observations aligned with synthetic energy events.
+schema_version: "2.0.0"
+format: csv
+primary_key: [weather_timestamp, grid_region]
+classification: synthetic
+partitioning: grid_region/weather_date
+timestamp_semantics: weather_timestamp is observation time.
+fields:
+  - {name: weather_timestamp, type: timestamp, required: true}
+  - {name: grid_region, type: string, required: true}
+  - {name: temperature_c, type: number, required: true, unit: celsius}
+  - {name: feels_like_c, type: number, required: true, unit: celsius}
+  - {name: humidity_pct, type: number, required: true, unit: percent}
+  - {name: wind_speed_mps, type: number, required: true, unit: metres_per_second}
+  - {name: wind_gust_mps, type: number, required: true, unit: metres_per_second}
+  - {name: precipitation_mm, type: number, required: true, unit: millimetres}
+  - {name: pressure_hpa, type: number, required: true, unit: hPa}
+  - {name: weather_condition, type: string, required: true, allowed_values: [clear, cloud, rain, wind, storm]}
+  - {name: severe_weather_flag, type: boolean, required: true}
+  - {name: data_source, type: string, required: true, allowed_values: [synthetic]}
+  - {name: schema_version, type: string, required: true}
+quality_expectations:
+  - observations cover every configured fictional grid region.
+  - severe_weather_flag marks controlled synthetic weather scenarios.
+

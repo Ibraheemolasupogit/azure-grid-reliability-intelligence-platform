@@ -1,0 +1,17 @@
+profile: ci
+random_seed: 20260201
+start_timestamp: "2026-01-01T00:00:00"
+end_timestamp: "2026-01-01T06:00:00"
+timezone: Europe/London
+meter_interval_minutes: 60
+substation_interval_minutes: 60
+number_of_regions: 2
+substations_per_region: 1
+feeders_per_substation: 1
+meters_per_feeder: 3
+weather_interval_minutes: 60
+target_anomaly_rate: 0.08
+target_missing_reading_rate: 0.02
+output_root: data/raw
+schema_version: "2.0.0"
+

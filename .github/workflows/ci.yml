@@ -37,6 +37,8 @@ jobs:
       - name: Mypy
         run: python -m mypy src
 
+      - name: Generate synthetic data with CI profile
+        run: python -m grid_reliability.data_generation.pipeline --config configs/synthetic_data_ci.yaml
+
       - name: Pytest with coverage
         run: python -m pytest --cov --cov-report=term-missing
-

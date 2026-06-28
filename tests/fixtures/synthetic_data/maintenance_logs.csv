@@ -1,0 +1,8 @@
+maintenance_id,asset_id,maintenance_type,scheduled_start,actual_start,completed_at,maintenance_status,priority,work_category,fault_code,technician_team,downtime_minutes,parts_replaced,maintenance_cost_gbp,follow_up_required,notes_code,schema_version
+MNT-47CD9F6DCD,AST-SUB-SOUTH-001,corrective,2026-01-01T04:04:00+00:00,2026-01-01T04:34:00+00:00,,in-progress,urgent,inspection,F_SYN_01,TEAM-A,90,none,337.24,False,NOTE_SYN_MONITOR,2.0.0
+MNT-8C10B1BF4D,AST-FDR-FDR-NORTH-001-01,condition-based,2026-01-01T02:33:00+00:00,2026-01-01T02:33:00+00:00,,in-progress,urgent,repair,F_SYN_01,TEAM-C,120,seal-kit,5581.06,False,NOTE_SYN_REVISIT,2.0.0
+MNT-B787C589E9,AST-TX-FDR-NORTH-001-01,corrective,2026-01-01T02:00:00+00:00,2026-01-01T01:45:00+00:00,2026-01-01T07:45:00+00:00,completed,low,replacement,F_SYN_03,TEAM-B,360,breaker-module,5295.77,False,NOTE_SYN_MONITOR,2.0.0
+MNT-78616E2311,AST-SWG-FDR-NORTH-001-01,emergency,2026-01-01T00:00:00+00:00,2025-12-31T23:45:00+00:00,,deferred,low,replacement,F_SYN_02,TEAM-B,120,none,7223.45,False,NOTE_SYN_REVISIT,2.0.0
+MNT-DD62C828A8,AST-SEC-FDR-SOUTH-001-01,emergency,2026-01-01T04:36:00+00:00,2026-01-01T06:06:00+00:00,,in-progress,high,replacement,F_SYN_03,TEAM-B,90,none,2685.26,True,NOTE_SYN_REVISIT,2.0.0
+MNT-B16C8DE8C8,AST-TX-FDR-SOUTH-001-01,condition-based,2026-01-01T03:37:00+00:00,2026-01-01T03:37:00+00:00,,in-progress,medium,testing,F_SYN_03,TEAM-C,120,seal-kit,5075.3,False,NOTE_SYN_REVISIT,2.0.0
+MNT-67BDCC235E,AST-SWG-FDR-SOUTH-001-01,corrective,2026-01-01T02:24:00+00:00,,,scheduled,medium,inspection,F_SYN_03,TEAM-B,0,relay,2354.8,False,NOTE_SYN_MONITOR,2.0.0

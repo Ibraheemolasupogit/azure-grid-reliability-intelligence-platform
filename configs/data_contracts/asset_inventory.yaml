@@ -1,0 +1,31 @@
+dataset: asset_inventory
+description: Fictional grid asset inventory for regions, substations, feeders, equipment, and meters.
+schema_version: "2.0.0"
+format: csv
+primary_key: asset_id
+classification: synthetic
+partitioning: grid_region/asset_type
+timestamp_semantics: date fields are synthetic asset lifecycle dates.
+fields:
+  - {name: asset_id, type: string, required: true}
+  - {name: asset_type, type: string, required: true, allowed_values: [primary_substation, secondary_substation, transformer, circuit_breaker, feeder, switchgear, protection_relay, smart_meter]}
+  - {name: asset_name, type: string, required: true}
+  - {name: grid_region, type: string, required: true}
+  - {name: substation_id, type: string, required: true}
+  - {name: feeder_id, type: string, required: false}
+  - {name: manufacturer, type: string, required: true}
+  - {name: model, type: string, required: true}
+  - {name: commissioned_date, type: date, required: true}
+  - {name: expected_life_years, type: integer, required: true, unit: years}
+  - {name: rated_capacity, type: number, required: true}
+  - {name: capacity_unit, type: string, required: true}
+  - {name: criticality_tier, type: string, required: true, allowed_values: [tier_1, tier_2, tier_3]}
+  - {name: operational_status, type: string, required: true, allowed_values: [active, maintenance, standby, retired]}
+  - {name: last_inspection_date, type: date, required: true}
+  - {name: next_inspection_due, type: date, required: true}
+  - {name: synthetic_location_code, type: string, required: true}
+  - {name: schema_version, type: string, required: true}
+quality_expectations:
+  - identifiers are fictional and contain no coordinates, postcodes, or real site names.
+  - operational_status active means normally available; maintenance means temporarily unavailable; standby means reserve; retired means out of service.
+

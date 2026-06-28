@@ -1,0 +1,35 @@
+dataset: smart_meter_events
+description: Fictional smart meter interval readings for downstream ingestion and validation.
+schema_version: "2.0.0"
+format: jsonl
+primary_key: event_id
+classification: synthetic
+partitioning: grid_region/event_date
+timestamp_semantics: event_timestamp is interval end time; ingested_at may include synthetic delay.
+foreign_keys:
+  feeder_id: asset_inventory.feeder_id
+  substation_id: asset_inventory.substation_id
+fields:
+  - {name: event_id, type: string, required: true}
+  - {name: event_timestamp, type: timestamp, required: true}
+  - {name: ingested_at, type: timestamp, required: true}
+  - {name: meter_id, type: string, required: true}
+  - {name: feeder_id, type: string, required: true}
+  - {name: substation_id, type: string, required: true}
+  - {name: grid_region, type: string, required: true, allowed_values: [GRID-NORTH, GRID-SOUTH, GRID-EAST, GRID-WEST, GRID-CENTRAL]}
+  - {name: customer_segment, type: string, required: true, allowed_values: [residential, commercial, industrial, public-service]}
+  - {name: reading_interval_minutes, type: integer, required: true, unit: minutes}
+  - {name: active_energy_kwh, type: number, required: true, unit: kWh}
+  - {name: reactive_energy_kvarh, type: number, required: true, unit: kvarh}
+  - {name: voltage_v, type: number, required: true, unit: V}
+  - {name: current_a, type: number, required: true, unit: A}
+  - {name: power_factor, type: number, required: true}
+  - {name: frequency_hz, type: number, required: true, unit: Hz}
+  - {name: meter_status, type: string, required: true, allowed_values: [active, suspect]}
+  - {name: quality_code, type: string, required: true, allowed_values: [GOOD, ESTIMATED]}
+  - {name: schema_version, type: string, required: true}
+quality_expectations:
+  - event_id is unique.
+  - required foreign keys reference the fictional network hierarchy.
+  - missing intervals are represented by absent records, not null primary keys.
+

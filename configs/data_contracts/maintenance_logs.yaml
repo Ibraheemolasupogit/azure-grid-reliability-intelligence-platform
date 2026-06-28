@@ -1,0 +1,32 @@
+dataset: maintenance_logs
+description: Fictional maintenance activity against synthetic assets.
+schema_version: "2.0.0"
+format: csv
+primary_key: maintenance_id
+classification: synthetic
+partitioning: scheduled_month/priority
+timestamp_semantics: scheduled_start is planned time; actual_start and completed_at may be null for non-completed work.
+foreign_keys:
+  asset_id: asset_inventory.asset_id
+fields:
+  - {name: maintenance_id, type: string, required: true}
+  - {name: asset_id, type: string, required: true}
+  - {name: maintenance_type, type: string, required: true, allowed_values: [preventive, corrective, inspection, emergency, condition-based]}
+  - {name: scheduled_start, type: timestamp, required: true}
+  - {name: actual_start, type: timestamp, required: false}
+  - {name: completed_at, type: timestamp, required: false}
+  - {name: maintenance_status, type: string, required: true, allowed_values: [completed, scheduled, deferred, cancelled, in-progress]}
+  - {name: priority, type: string, required: true, allowed_values: [low, medium, high, urgent]}
+  - {name: work_category, type: string, required: true, allowed_values: [inspection, repair, replacement, testing]}
+  - {name: fault_code, type: string, required: false}
+  - {name: technician_team, type: string, required: true}
+  - {name: downtime_minutes, type: integer, required: true, unit: minutes}
+  - {name: parts_replaced, type: string, required: true}
+  - {name: maintenance_cost_gbp, type: number, required: true, unit: GBP}
+  - {name: follow_up_required, type: boolean, required: true}
+  - {name: notes_code, type: string, required: true}
+  - {name: schema_version, type: string, required: true}
+quality_expectations:
+  - notes_code is coded synthetic text, not a sensitive free-text narrative.
+  - every asset_id exists in asset_inventory.
+

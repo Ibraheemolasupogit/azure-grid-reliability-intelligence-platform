@@ -1,0 +1,35 @@
+dataset: substation_events
+description: Fictional substation and feeder telemetry readings.
+schema_version: "2.0.0"
+format: jsonl
+primary_key: event_id
+classification: synthetic
+partitioning: grid_region/event_date
+timestamp_semantics: event_timestamp is telemetry observation time.
+foreign_keys:
+  feeder_id: asset_inventory.feeder_id
+  substation_id: asset_inventory.substation_id
+fields:
+  - {name: event_id, type: string, required: true}
+  - {name: event_timestamp, type: timestamp, required: true}
+  - {name: ingested_at, type: timestamp, required: true}
+  - {name: substation_id, type: string, required: true}
+  - {name: feeder_id, type: string, required: true}
+  - {name: grid_region, type: string, required: true}
+  - {name: load_mw, type: number, required: true, unit: MW}
+  - {name: capacity_mva, type: number, required: true, unit: MVA}
+  - {name: utilisation_pct, type: number, required: true, unit: percent}
+  - {name: voltage_kv, type: number, required: true, unit: kV}
+  - {name: frequency_hz, type: number, required: true, unit: Hz}
+  - {name: transformer_temperature_c, type: number, required: true, unit: celsius}
+  - {name: oil_temperature_c, type: number, required: true, unit: celsius}
+  - {name: ambient_temperature_c, type: number, required: true, unit: celsius}
+  - {name: breaker_status, type: string, required: true, allowed_values: [closed]}
+  - {name: alarm_code, type: string, required: false, allowed_values: ["", TEMP_WARN, HIGH_LOAD]}
+  - {name: operational_status, type: string, required: true, allowed_values: [normal, warning, constrained, maintenance, offline]}
+  - {name: quality_code, type: string, required: true, allowed_values: [GOOD, ESTIMATED]}
+  - {name: schema_version, type: string, required: true}
+quality_expectations:
+  - utilisation_pct is derived from load_mw and capacity_mva.
+  - telemetry does not include future model target labels.
+

@@ -6,9 +6,11 @@ Status: implemented in this repository state.
 
 Scope: project structure, Python package foundation, configuration, documentation, diagrams, baseline tests, developer automation, and CI.
 
-## Milestone 2: Synthetic Operational Data
+## Milestone 2: Governed Synthetic Energy Data Generation
 
-Planned datasets include `smart_meter_events.jsonl`, `substation_events.jsonl`, `weather_data.csv`, `asset_inventory.csv`, `maintenance_logs.csv`, and `outage_history.csv`.
+Status: implemented.
+
+Implemented deterministic fictional source datasets include `smart_meter_events.jsonl`, `substation_events.jsonl`, `weather_data.csv`, `asset_inventory.csv`, `maintenance_logs.csv`, and `outage_history.csv`.
 
 ## Milestone 3: Ingestion and Data Quality
 
@@ -29,4 +31,3 @@ Planned Power BI-ready outputs, monitoring views, incident investigation workflo
 ## Milestone 7: Azure Deployment Guidance
 
 Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestone 1.
-
