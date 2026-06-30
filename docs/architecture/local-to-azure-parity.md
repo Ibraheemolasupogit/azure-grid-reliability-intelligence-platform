@@ -14,11 +14,13 @@ The platform is designed to demonstrate engineering patterns locally before clou
 - Contract, duplicate, dataset, and relationship validation.
 - Interim JSONL and quarantine JSONL persistence.
 - Ingestion metrics, audit manifests, and Markdown quality reports.
+- Local short-term forecasting over validated interim telemetry.
+- Forecast CSVs, model comparison metrics, model metadata, manifests, and Markdown model reports.
 - Tests and static quality checks.
 
 ## What Is Planned Locally
 
-- Local analytical tables and ML training workflows.
+- Local analytical tables beyond forecasting.
 - Local metrics, reporting extracts, and investigation workflows.
 
 ## What Requires Azure
@@ -26,6 +28,7 @@ The platform is designed to demonstrate engineering patterns locally before clou
 - Event Hubs namespaces and event streams.
 - Data Lake Storage Gen2 accounts and containers.
 - Synapse, Azure Data Explorer, Azure Machine Learning, Azure Monitor, Power BI, Purview, and Azure AI Foundry resources.
+- Online model endpoints, model registry deployment, and production retraining orchestration.
 - Identity, networking, RBAC, private endpoints, and production-grade observability.
 
 Local simulations demonstrate architecture and delivery patterns, not live Azure deployment.

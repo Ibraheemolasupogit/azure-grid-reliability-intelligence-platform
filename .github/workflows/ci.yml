@@ -55,12 +55,26 @@ jobs:
           test -s reports/ingestion/local-ci/ingestion_manifest.json
           test -s reports/ingestion/local-ci/data_quality_report.md
 
+      - name: Run forecasting with CI profile
+        run: python -m grid_reliability.forecasting.pipeline --config configs/forecasting_ci.yaml
+
+      - name: Verify forecasting outputs
+        run: |
+          test -s outputs/forecasting/forecast-ci/load_forecast.csv
+          test -s outputs/forecasting/forecast-ci/metrics.json
+          test -s outputs/forecasting/forecast-ci/model_comparison.csv
+          test -s outputs/forecasting/forecast-ci/forecast_manifest.json
+          test -s outputs/models/forecasting/forecast-ci/model_metadata.json
+          test -s reports/forecasting/forecast-ci/forecast_evaluation.md
+          test -s reports/forecasting/forecast-ci/model_card.md
+          test -s reports/forecasting/forecast-ci/executive_load_forecast_summary.md
+
       - name: Pytest with coverage
         run: python -m pytest --cov --cov-report=term-missing
 
       - name: Confirm runtime outputs remain untracked
         run: |
-          git status --short --ignored data reports | grep -E '!! data/raw|!! data/interim|!! reports/ingestion'
+          git status --short --ignored data outputs reports | grep -E '!! data/raw|!! data/interim|!! outputs/forecasting|!! reports/ingestion|!! reports/forecasting'
 
       - name: Clean generated runtime outputs
         run: |
@@ -68,3 +82,6 @@ jobs:
           make clean-interim
           make clean-quarantine
           make clean-ingestion-reports
+          make clean-forecasting
+          make clean-model-artifacts
+          make clean-forecast-reports

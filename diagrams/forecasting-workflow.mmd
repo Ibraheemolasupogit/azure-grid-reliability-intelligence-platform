@@ -1,0 +1,15 @@
+flowchart TD
+    interim["Validated interim telemetry"]
+    aggregation["Aggregation and alignment"]
+    features["Leakage-safe features"]
+    splits["Chronological splits"]
+    baselines["Baselines"]
+    candidates["Candidate models"]
+    evaluation["Backtesting and evaluation"]
+    selection["Model selection"]
+    outputs["Forecasts, metrics, manifests, and reports"]
+
+    interim --> aggregation --> features --> splits
+    splits --> baselines --> evaluation
+    splits --> candidates --> evaluation
+    evaluation --> selection --> outputs

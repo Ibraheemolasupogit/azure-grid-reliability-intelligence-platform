@@ -2,7 +2,7 @@
 
 A local-first, Azure-mapped foundation for grid reliability and energy operations intelligence across synthetic telemetry, data quality, forecasting, asset health, outage risk, operational monitoring, and analytical reporting.
 
-This repository is currently at **Milestone 3: Governed Ingestion and Data Validation**. It establishes the engineering structure, shared foundations, deterministic fictional source data generation, and a local ingestion layer that validates, normalises, quarantines, and reports on synthetic datasets. It does not train models, calculate reliability KPIs, build dashboards, integrate GenAI, or deploy Azure resources.
+This repository is currently at **Milestone 4: Electricity Demand Forecasting**. It establishes the engineering structure, shared foundations, deterministic fictional source data generation, governed local ingestion, and reproducible local short-term forecasting over validated interim telemetry. It does not calculate reliability KPIs, build dashboards, integrate GenAI, or deploy Azure resources.
 
 ## Problem Statement
 
@@ -49,7 +49,7 @@ Local simulations are intended to demonstrate architecture, testing, reproducibi
 
 ## Local-First and Azure Deployment
 
-Milestones 1 through 3 run locally and require no Azure credentials. Future milestones will implement local equivalents of cloud capabilities first, then document how each maps to Azure services. Any live Azure deployment would require a subscription, identity configuration, RBAC, networking, service provisioning, and operational monitoring outside the current milestone.
+Milestones 1 through 4 run locally and require no Azure credentials. Future milestones will implement local equivalents of cloud capabilities first, then document how each maps to Azure services. Any live Azure deployment would require a subscription, identity configuration, RBAC, networking, service provisioning, and operational monitoring outside the current milestone.
 
 ## Azure Service Mapping
 
@@ -60,7 +60,7 @@ Milestones 1 through 3 run locally and require no Azure credentials. Future mile
 | Stream processing | Finite local micro-batch abstraction | Azure Stream Analytics or Azure Functions |
 | Analytical warehouse | Local analytical tables | Azure Synapse Analytics |
 | Time-series analytics | Local Python/columnar analysis | Azure Data Explorer |
-| ML lifecycle | Local reproducible training pipelines | Azure Machine Learning |
+| ML lifecycle | Local reproducible forecasting pipeline | Azure Machine Learning |
 | GenAI operations assistant | Provider-neutral local interface | Azure AI Foundry |
 | Monitoring | Structured logs and local metrics | Azure Monitor/Application Insights |
 | Reporting | CSV/Parquet analytical outputs | Microsoft Power BI |
@@ -129,6 +129,26 @@ The ingestion layer verifies `_manifest.json`, checks file sizes, SHA-256 checks
 
 Run statuses are `PASSED`, `PASSED_WITH_WARNINGS`, `FAILED_QUALITY_THRESHOLD`, `FAILED_MANIFEST`, `FAILED_CONFIGURATION`, and `FAILED_PROCESSING`. Failed statuses return a non-zero CLI exit code.
 
+## Electricity Demand Forecasting
+
+Run local forecasting against validated interim data:
+
+```bash
+python3 -m grid_reliability.forecasting.pipeline --config configs/forecasting.yaml
+```
+
+Run the small profile end to end:
+
+```bash
+python3 -m grid_reliability.data_generation.pipeline --config configs/synthetic_data_ci.yaml
+python3 -m grid_reliability.ingestion.pipeline --config configs/ingestion_ci.yaml
+python3 -m grid_reliability.forecasting.pipeline --config configs/forecasting_ci.yaml
+```
+
+Forecasting supports `active_energy_kwh` from smart meter events and `load_mw` from substation events at grid-region, substation, or feeder grain. The CI profile uses one-interval-ahead grid-region forecasts because it contains only six hourly timestamps.
+
+Outputs are written under `outputs/forecasting/<run_id>/`, model metadata under `outputs/models/forecasting/<run_id>/`, and reports under `reports/forecasting/<run_id>/`. Generated CSV outputs are Power BI-ready, but no Power BI dashboard is created.
+
 ## Planned Analytical and ML Use Cases
 
 - Short-term electricity-demand forecasting.
@@ -187,7 +207,7 @@ Planned reliability measures include SAIDI, SAIFI, CAIDI, availability, outage f
 1. Repository foundation and architecture scaffold.
 2. Governed synthetic energy data generation.
 3. Governed ingestion and data validation.
-4. Forecasting and reliability analytics.
+4. Electricity demand forecasting.
 5. Asset health, outage risk, and anomaly detection.
 6. Operations reporting and GenAI assistance.
 7. Azure deployment guidance.
@@ -209,7 +229,7 @@ The foundation uses Ruff, mypy, pytest, coverage, typed settings, deterministic 
 
 ## Limitations and Current Status
 
-Only Milestones 1 through 3 are implemented. The repository contains architecture scaffolding, shared foundation utilities, synthetic source data generation, and governed local ingestion with validation, interim outputs, quarantine, metrics, and reports. Analytics, forecasting, reliability calculations, dashboards, GenAI workflows, and live Azure infrastructure remain future work. Generated runtime datasets, trained models, reports, dashboards, and Azure deployment artefacts are intentionally excluded from version control.
+Only Milestones 1 through 4 are implemented. The repository contains architecture scaffolding, shared foundation utilities, synthetic source data generation, governed local ingestion, and local demand forecasting with model metadata, manifests, metrics, and reports. Reliability calculations, asset-health scoring, outage prediction, anomaly-detection models, dashboards, GenAI workflows, and live Azure infrastructure remain future work. Generated runtime datasets, model artifacts, reports, dashboards, and Azure deployment artefacts are intentionally excluded from version control.
 
 ## Licence
 

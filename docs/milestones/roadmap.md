@@ -18,9 +18,13 @@ Status: implemented.
 
 Implemented local source discovery, manifest verification, CSV and JSON Lines readers, contract validation, relationship validation, duplicate handling, interim JSONL outputs, quarantine JSONL outputs, metrics, audit manifests, quality reports, CLI exit semantics, and a finite local event-oriented reader abstraction.
 
-## Milestone 4: Forecasting and Reliability Analytics
+## Milestone 4: Electricity Demand Forecasting
 
-Planned short-term demand forecasting, feeder and substation load forecasting, reliability KPI calculation, and analytical output tables.
+Status: implemented.
+
+Implemented local short-term forecasting over validated interim telemetry, leakage-safe features, chronological splits, baselines, deterministic autoregressive linear modelling, backtesting, model selection, forecast CSVs, metrics, manifests, model metadata, and reports.
+
+Reliability KPI calculation remains out of scope for this milestone.
 
 ## Milestone 5: Asset Health, Outage Risk, and Anomaly Detection
 

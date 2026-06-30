@@ -1,0 +1,26 @@
+profile: ci
+interim_root: data/interim
+output_root: outputs/forecasting
+report_root: reports/forecasting
+model_root: outputs/models/forecasting
+target_source: smart_meter_events
+target_column: active_energy_kwh
+aggregation_level: grid_region
+timestamp_frequency_minutes: 60
+forecast_horizons: [1]
+minimum_history_intervals: 6
+validation_intervals: 1
+test_intervals: 1
+backtest_folds: 1
+random_seed: 20260201
+include_weather_features: true
+include_calendar_features: true
+include_lag_features: true
+lag_intervals: [1]
+rolling_windows: [2]
+candidate_models: [persistence, moving_average, autoregressive_linear]
+selection_metric: mae
+missing_interval_policy: drop
+missing_interval_limit: 2
+prediction_interval_level: 0.8
+timezone: UTC

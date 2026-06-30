@@ -11,13 +11,15 @@ flowchart LR
     interim["Valid interim JSONL<br/>data/interim"]
     quarantine["Invalid quarantine JSONL<br/>data/quarantine/run_id"]
     reports["Metrics and audit reports<br/>reports/ingestion"]
-    analytics["Forecasting, anomaly, asset health, reliability analytics<br/>(future milestones)"]
+    forecasting["Local demand forecasting<br/>outputs/forecasting"]
+    analytics["Anomaly, asset health, reliability analytics<br/>(future milestones)"]
     reporting["Power BI-ready outputs and operational monitoring<br/>(future milestones)"]
 
     inputs --> manifest --> ingestion --> validation
-    validation --> interim --> analytics --> reporting
+    validation --> interim --> forecasting --> analytics --> reporting
     validation --> quarantine --> reports
     interim --> reports
+    forecasting --> reports
 ```
 
 The matching Azure pattern is Event Hubs, Azure Functions or Stream Analytics, Data Lake Storage Gen2 raw/quarantine/silver zones, Azure Monitor or Application Insights, Microsoft Purview, Azure Data Explorer or Synapse, Azure Machine Learning, and Power BI. These are mappings only; no Azure resources are deployed.

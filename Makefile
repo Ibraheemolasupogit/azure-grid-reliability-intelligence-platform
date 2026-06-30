@@ -1,4 +1,4 @@
-.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci clean-data clean-interim clean-quarantine clean-ingestion-reports clean
+.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean
 
 install:
 	python -m pip install --upgrade pip
@@ -40,6 +40,16 @@ validate-data: ingest-data
 demo-ingestion-ci: generate-data-ci ingest-data-ci
 	@echo "Ingestion reports written under reports/ingestion/local-ci"
 
+forecast-data:
+	python3 -m grid_reliability.forecasting.pipeline --config configs/forecasting.yaml
+
+forecast-data-ci:
+	python3 -m grid_reliability.forecasting.pipeline --config configs/forecasting_ci.yaml
+
+forecast-demo: generate-data-ci ingest-data-ci forecast-data-ci
+	@echo "Forecast outputs written under outputs/forecasting/forecast-ci"
+	@echo "Forecast reports written under reports/forecasting/forecast-ci"
+
 clean-data:
 	rm -f data/raw/smart_meter_events.jsonl data/raw/substation_events.jsonl data/raw/weather_data.csv data/raw/asset_inventory.csv data/raw/maintenance_logs.csv data/raw/outage_history.csv data/raw/_manifest.json
 
@@ -51,6 +61,15 @@ clean-quarantine:
 
 clean-ingestion-reports:
 	rm -rf reports/ingestion
+
+clean-forecasting:
+	rm -rf outputs/forecasting
+
+clean-model-artifacts:
+	rm -rf outputs/models/forecasting
+
+clean-forecast-reports:
+	rm -rf reports/forecasting
 
 clean:
 	rm -rf .pytest_cache .ruff_cache .mypy_cache htmlcov .coverage coverage.xml build dist *.egg-info
