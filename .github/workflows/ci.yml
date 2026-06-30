@@ -105,12 +105,31 @@ jobs:
           test -s reports/outage_prediction/outage-prediction-ci/model_card.md
           test -s reports/outage_prediction/outage-prediction-ci/executive_outage_risk_summary.md
 
+      - name: Run reliability analytics with CI profile
+        run: python -m grid_reliability.reliability.pipeline --config configs/reliability_ci.yaml
+
+      - name: Verify reliability outputs
+        run: |
+          test -s outputs/reliability/reliability-ci/reliability_kpis.csv
+          test -s outputs/reliability/reliability-ci/reliability_components.csv
+          test -s outputs/reliability/reliability-ci/reliability_trends.csv
+          test -s outputs/reliability/reliability-ci/reliability_benchmarks.csv
+          test -s outputs/reliability/reliability-ci/reliability_reasons.csv
+          test -s outputs/reliability/reliability-ci/outage_event_summary.csv
+          test -s outputs/reliability/reliability-ci/system_summary.json
+          test -s outputs/reliability/reliability-ci/metrics.json
+          test -s outputs/reliability/reliability-ci/reliability_manifest.json
+          test -s reports/reliability/reliability-ci/reliability_performance_report.md
+          test -s reports/reliability/reliability-ci/reliability_trend_report.md
+          test -s reports/reliability/reliability-ci/reliability_methodology.md
+          test -s reports/reliability/reliability-ci/executive_reliability_summary.md
+
       - name: Pytest with coverage
         run: python -m pytest --cov --cov-report=term-missing
 
       - name: Confirm runtime outputs remain untracked
         run: |
-          git status --short --ignored data outputs reports | grep -E '!! data/raw|!! data/interim|!! outputs/forecasting|!! outputs/asset_health|!! outputs/outage_prediction|!! reports/ingestion|!! reports/forecasting|!! reports/asset_health|!! reports/outage_prediction'
+          git status --short --ignored data outputs reports | grep -E '!! data/raw|!! data/interim|!! outputs/forecasting|!! outputs/asset_health|!! outputs/outage_prediction|!! outputs/reliability|!! reports/ingestion|!! reports/forecasting|!! reports/asset_health|!! reports/outage_prediction|!! reports/reliability'
 
       - name: Clean generated runtime outputs
         run: |
@@ -126,3 +145,5 @@ jobs:
           make clean-outage-prediction
           make clean-outage-models
           make clean-outage-reports
+          make clean-reliability
+          make clean-reliability-reports

@@ -1,4 +1,4 @@
-.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo predict-outages predict-outages-ci outage-prediction-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean-outage-prediction clean-outage-models clean-outage-reports clean
+.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo predict-outages predict-outages-ci outage-prediction-demo calculate-reliability calculate-reliability-ci reliability-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean-outage-prediction clean-outage-models clean-outage-reports clean-reliability clean-reliability-reports clean
 
 install:
 	python -m pip install --upgrade pip
@@ -71,6 +71,16 @@ outage-prediction-demo: generate-data-ci ingest-data-ci predict-outages-ci
 	@echo "Outage prediction models written under outputs/models/outage_prediction/outage-prediction-ci"
 	@echo "Outage prediction reports written under reports/outage_prediction/outage-prediction-ci"
 
+calculate-reliability:
+	python3 -m grid_reliability.reliability.pipeline --config configs/reliability.yaml
+
+calculate-reliability-ci:
+	python3 -m grid_reliability.reliability.pipeline --config configs/reliability_ci.yaml
+
+reliability-demo: generate-data-ci ingest-data-ci calculate-reliability-ci
+	@echo "Reliability outputs written under outputs/reliability/reliability-ci"
+	@echo "Reliability reports written under reports/reliability/reliability-ci"
+
 clean-data:
 	rm -f data/raw/smart_meter_events.jsonl data/raw/substation_events.jsonl data/raw/weather_data.csv data/raw/asset_inventory.csv data/raw/maintenance_logs.csv data/raw/outage_history.csv data/raw/_manifest.json
 
@@ -106,6 +116,12 @@ clean-outage-models:
 
 clean-outage-reports:
 	rm -rf reports/outage_prediction
+
+clean-reliability:
+	rm -rf outputs/reliability
+
+clean-reliability-reports:
+	rm -rf reports/reliability
 
 clean:
 	rm -rf .pytest_cache .ruff_cache .mypy_cache htmlcov .coverage coverage.xml build dist *.egg-info

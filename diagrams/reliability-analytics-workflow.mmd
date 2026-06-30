@@ -1,0 +1,17 @@
+flowchart TD
+    interim["Validated interim data"]
+    population["Population denominators"]
+    classification["Outage filtering and classification"]
+    aggregation["Entity and period aggregation"]
+    kpis["SAIFI / SAIDI / CAIDI / ASAI / operational measures"]
+    trends["Trends and internal benchmarks"]
+    score["Composite reliability score"]
+    band["Reliability band"]
+    reasons["Reason codes"]
+    outputs["Outputs, metrics, manifest, and reports"]
+
+    interim --> population --> classification --> aggregation --> kpis --> trends --> score
+    score --> band
+    score --> reasons
+    band --> outputs
+    reasons --> outputs

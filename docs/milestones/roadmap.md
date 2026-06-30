@@ -42,10 +42,18 @@ Implemented validated interim-only outage-risk prediction, feeder/substation/pri
 
 Reliability KPIs, separate asset-failure probability models, anomaly detection, dashboards, automated response, restoration optimisation, GenAI, Spark, and Azure deployment remain out of scope.
 
-## Milestone 7: Operations Reporting and GenAI Assistance
+## Milestone 7: Grid Reliability Scoring and KPI Analytics
+
+Status: implemented.
+
+Implemented validated interim-only reliability analytics, observed-meter population denominators, planned and unplanned outage separation, SAIFI, SAIDI, CAIDI, ASAI, ASUI, operational outage measures, hierarchy aggregation, overlap-aware availability windows, trend outputs, internal peer benchmarks, composite reliability scores, reliability bands, reason codes, manifests, metrics, reports, Makefile targets, and CI checks.
+
+Regulatory submissions, real operator benchmarking, financial-loss estimation, dashboards, optimisation, GenAI, Spark, and Azure deployment remain out of scope.
+
+## Milestone 8: Operations Reporting and GenAI Assistance
 
 Planned Power BI-ready outputs, monitoring views, incident investigation workflows, and provider-neutral GenAI assistant interfaces mapped to Azure AI Foundry.
 
-## Milestone 8: Azure Deployment Guidance
+## Milestone 9: Azure Deployment Guidance
 
-Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 6.
+Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 7.

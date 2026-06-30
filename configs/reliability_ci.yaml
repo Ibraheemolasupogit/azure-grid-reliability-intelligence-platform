@@ -1,0 +1,39 @@
+profile: ci
+interim_root: data/interim
+output_root: outputs/reliability
+report_root: reports/reliability
+assessment_start: "2026-01-01T00:00:00Z"
+assessment_end: "2026-01-02T00:00:00Z"
+aggregation_levels:
+  - grid_region
+  - substation
+  - feeder
+period_frequency: full
+include_planned_outages: true
+include_unplanned_outages: true
+customer_population_method: observed_smart_meters
+minimum_population: 1
+minimum_outage_duration_minutes: 0
+maximum_outage_duration_minutes: 1440
+sustained_interruption_threshold_minutes: 5
+restoration_target_minutes: 180
+kpi_precision: 6
+score_direction: higher_is_better
+component_weights:
+  interruption_frequency: 0.25
+  interruption_duration: 0.25
+  restoration: 0.15
+  availability: 0.20
+  severe_weather_resilience: 0.05
+  equipment_outage: 0.05
+  data_completeness: 0.05
+benchmark_method: peer_median
+benchmark_scope: entity_type
+reliability_band_thresholds:
+  weak_max: 50
+  watch_max: 70
+  stable_max: 85
+minimum_data_completeness: 0.5
+schema_version: "7.0.0"
+run_id_strategy: deterministic
+max_reason_codes: 5
