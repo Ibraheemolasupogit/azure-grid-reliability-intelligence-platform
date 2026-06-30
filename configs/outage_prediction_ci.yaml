@@ -1,0 +1,39 @@
+profile: ci
+interim_root: data/interim
+asset_health_root: outputs/asset_health
+output_root: outputs/outage_prediction
+report_root: reports/outage_prediction
+model_root: outputs/models/outage_prediction
+entity_type: feeder
+observation_frequency_minutes: 60
+prediction_horizon_intervals: 1
+feature_lookback_intervals: 2
+minimum_history_intervals: 1
+validation_intervals: 1
+test_intervals: 1
+backtest_folds: 1
+candidate_models:
+  - prevalence
+  - recent_outage_heuristic
+  - operational_warning_heuristic
+  - logistic_regression
+selection_metric: f1
+positive_class_weight: 3.0
+classification_threshold: 0.5
+calibration_method: raw
+random_seed: 20260201
+include_weather_features: true
+include_asset_features: true
+include_maintenance_features: true
+include_asset_health_features: false
+include_smart_meter_features: true
+include_substation_features: true
+minimum_positive_examples: 1
+minimum_negative_examples: 1
+risk_band_thresholds:
+  moderate_min: 0.25
+  high_min: 0.5
+  critical_min: 0.75
+schema_version: "6.0.0"
+run_id_strategy: deterministic
+max_reason_codes: 5

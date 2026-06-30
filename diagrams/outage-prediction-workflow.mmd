@@ -1,0 +1,18 @@
+flowchart TD
+    interim["Validated interim datasets"]
+    panel["Entity-time panel"]
+    labelled["Historical features + future labels"]
+    leakage["Leakage checks"]
+    split["Chronological split with purge"]
+    baselines["Baselines"]
+    models["Candidate models"]
+    evaluation["Evaluation, calibration, thresholding"]
+    risk["Risk scores, bands, reasons"]
+    artifacts["Metrics, manifest, model metadata, reports"]
+
+    interim --> panel --> labelled --> leakage --> split
+    split --> baselines
+    split --> models
+    baselines --> evaluation
+    models --> evaluation
+    evaluation --> risk --> artifacts

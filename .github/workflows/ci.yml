@@ -86,12 +86,31 @@ jobs:
           test -s reports/asset_health/asset-health-ci/asset_health_methodology.md
           test -s reports/asset_health/asset-health-ci/executive_asset_health_summary.md
 
+      - name: Run outage prediction with CI profile
+        run: python -m grid_reliability.outage_prediction.pipeline --config configs/outage_prediction_ci.yaml
+
+      - name: Verify outage-prediction outputs
+        run: |
+          test -s outputs/outage_prediction/outage-prediction-ci/outage_risk_predictions.csv
+          test -s outputs/outage_prediction/outage-prediction-ci/metrics.json
+          test -s outputs/outage_prediction/outage-prediction-ci/model_comparison.csv
+          test -s outputs/outage_prediction/outage-prediction-ci/threshold_analysis.csv
+          test -s outputs/outage_prediction/outage-prediction-ci/confusion_matrix.csv
+          test -s outputs/outage_prediction/outage-prediction-ci/outage_prediction_manifest.json
+          test -s outputs/models/outage_prediction/outage-prediction-ci/model_metadata.json
+          test -s outputs/models/outage_prediction/outage-prediction-ci/feature_schema.json
+          test -s outputs/models/outage_prediction/outage-prediction-ci/preprocessing_metadata.json
+          test -s reports/outage_prediction/outage-prediction-ci/outage_prediction_evaluation.md
+          test -s reports/outage_prediction/outage-prediction-ci/outage_risk_report.md
+          test -s reports/outage_prediction/outage-prediction-ci/model_card.md
+          test -s reports/outage_prediction/outage-prediction-ci/executive_outage_risk_summary.md
+
       - name: Pytest with coverage
         run: python -m pytest --cov --cov-report=term-missing
 
       - name: Confirm runtime outputs remain untracked
         run: |
-          git status --short --ignored data outputs reports | grep -E '!! data/raw|!! data/interim|!! outputs/forecasting|!! outputs/asset_health|!! reports/ingestion|!! reports/forecasting|!! reports/asset_health'
+          git status --short --ignored data outputs reports | grep -E '!! data/raw|!! data/interim|!! outputs/forecasting|!! outputs/asset_health|!! outputs/outage_prediction|!! reports/ingestion|!! reports/forecasting|!! reports/asset_health|!! reports/outage_prediction'
 
       - name: Clean generated runtime outputs
         run: |
@@ -104,3 +123,6 @@ jobs:
           make clean-forecast-reports
           make clean-asset-health
           make clean-asset-health-reports
+          make clean-outage-prediction
+          make clean-outage-models
+          make clean-outage-reports

@@ -18,11 +18,13 @@ The platform is designed to demonstrate engineering patterns locally before clou
 - Forecast CSVs, model comparison metrics, model metadata, manifests, and Markdown model reports.
 - Local transparent asset-health analytics over validated interim data.
 - Asset-health CSVs, component evidence, reason codes, priorities, manifests, metrics, and Markdown reports.
+- Local synthetic outage-risk prediction over validated interim data.
+- Outage-risk CSVs, metrics, model metadata, manifests, risk bands, reason codes, and Markdown reports.
 - Tests and static quality checks.
 
 ## What Is Planned Locally
 
-- Local analytical tables beyond forecasting and asset health.
+- Local analytical tables beyond forecasting, asset health, and outage prediction.
 - Local metrics, reporting extracts, and investigation workflows.
 
 ## What Requires Azure

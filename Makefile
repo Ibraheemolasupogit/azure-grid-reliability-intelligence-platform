@@ -1,4 +1,4 @@
-.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean
+.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo predict-outages predict-outages-ci outage-prediction-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean-outage-prediction clean-outage-models clean-outage-reports clean
 
 install:
 	python -m pip install --upgrade pip
@@ -60,6 +60,17 @@ asset-health-demo: generate-data-ci ingest-data-ci assess-asset-health-ci
 	@echo "Asset-health outputs written under outputs/asset_health/asset-health-ci"
 	@echo "Asset-health reports written under reports/asset_health/asset-health-ci"
 
+predict-outages:
+	python3 -m grid_reliability.outage_prediction.pipeline --config configs/outage_prediction.yaml
+
+predict-outages-ci:
+	python3 -m grid_reliability.outage_prediction.pipeline --config configs/outage_prediction_ci.yaml
+
+outage-prediction-demo: generate-data-ci ingest-data-ci predict-outages-ci
+	@echo "Outage prediction outputs written under outputs/outage_prediction/outage-prediction-ci"
+	@echo "Outage prediction models written under outputs/models/outage_prediction/outage-prediction-ci"
+	@echo "Outage prediction reports written under reports/outage_prediction/outage-prediction-ci"
+
 clean-data:
 	rm -f data/raw/smart_meter_events.jsonl data/raw/substation_events.jsonl data/raw/weather_data.csv data/raw/asset_inventory.csv data/raw/maintenance_logs.csv data/raw/outage_history.csv data/raw/_manifest.json
 
@@ -86,6 +97,15 @@ clean-asset-health:
 
 clean-asset-health-reports:
 	rm -rf reports/asset_health
+
+clean-outage-prediction:
+	rm -rf outputs/outage_prediction
+
+clean-outage-models:
+	rm -rf outputs/models/outage_prediction
+
+clean-outage-reports:
+	rm -rf reports/outage_prediction
 
 clean:
 	rm -rf .pytest_cache .ruff_cache .mypy_cache htmlcov .coverage coverage.xml build dist *.egg-info

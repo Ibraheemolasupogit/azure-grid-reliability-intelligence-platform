@@ -2,7 +2,7 @@
 
 A local-first, Azure-mapped foundation for grid reliability and energy operations intelligence across synthetic telemetry, data quality, forecasting, asset health, outage risk, operational monitoring, and analytical reporting.
 
-This repository is currently at **Milestone 5: Asset Health Analytics**. It establishes the engineering structure, shared foundations, deterministic fictional source data generation, governed local ingestion, reproducible local short-term forecasting, and transparent asset-health scoring over validated interim data. It does not calculate reliability KPIs, predict failures or outages, build dashboards, integrate GenAI, or deploy Azure resources.
+This repository is currently at **Milestone 6: Outage Prediction**. It establishes the engineering structure, shared foundations, deterministic fictional source data generation, governed local ingestion, reproducible local short-term forecasting, transparent asset-health scoring, and leakage-safe synthetic outage-risk prediction over validated interim data. It does not calculate reliability KPIs, build dashboards, integrate GenAI, or deploy Azure resources.
 
 ## Problem Statement
 
@@ -15,7 +15,8 @@ Electricity networks need reliable ways to combine smart meter, substation, weat
 - Data validation and quality controls.
 - Short-term demand and load forecasting.
 - Asset health condition scoring.
-- Anomaly detection and outage prediction.
+- Outage prediction.
+- Anomaly detection.
 - Reliability KPI calculation and executive reporting.
 - Operational monitoring.
 - GenAI-assisted incident and maintenance analysis.
@@ -33,7 +34,7 @@ flowchart TD
     adx["Azure Data Explorer<br/>(planned)"]
     synapse["Azure Synapse Analytics<br/>(planned)"]
     aml["Azure Machine Learning<br/>(planned)"]
-    intelligence["Forecasting and asset-health analytics<br/>(local)"]
+    intelligence["Forecasting, asset-health, outage-risk analytics<br/>(local)"]
     operations["Power BI, Azure Monitor, Grid Operations Copilot<br/>(planned)"]
     users["Operators and decision-makers"]
 
@@ -49,7 +50,7 @@ Local simulations are intended to demonstrate architecture, testing, reproducibi
 
 ## Local-First and Azure Deployment
 
-Milestones 1 through 5 run locally and require no Azure credentials. Future milestones will implement local equivalents of cloud capabilities first, then document how each maps to Azure services. Any live Azure deployment would require a subscription, identity configuration, RBAC, networking, service provisioning, and operational monitoring outside the current milestone.
+Milestones 1 through 6 run locally and require no Azure credentials. Future milestones will implement local equivalents of cloud capabilities first, then document how each maps to Azure services. Any live Azure deployment would require a subscription, identity configuration, RBAC, networking, service provisioning, and operational monitoring outside the current milestone.
 
 ## Azure Service Mapping
 
@@ -60,7 +61,7 @@ Milestones 1 through 5 run locally and require no Azure credentials. Future mile
 | Stream processing | Finite local micro-batch abstraction | Azure Stream Analytics or Azure Functions |
 | Analytical warehouse | Local analytical tables | Azure Synapse Analytics |
 | Time-series analytics | Local Python/columnar analysis | Azure Data Explorer |
-| ML lifecycle | Local reproducible forecasting and asset-health batch pipelines | Azure Machine Learning |
+| ML lifecycle | Local forecasting, asset-health, and outage-risk batch pipelines | Azure Machine Learning |
 | GenAI operations assistant | Provider-neutral local interface | Azure AI Foundry |
 | Monitoring | Structured logs and local metrics | Azure Monitor/Application Insights |
 | Reporting | CSV/Parquet analytical outputs | Microsoft Power BI |
@@ -169,6 +170,26 @@ Asset health supports `primary_substation`, `secondary_substation`, `transformer
 
 Outputs are written under `outputs/asset_health/<run_id>/` and reports under `reports/asset_health/<run_id>/`. The implementation separates condition score, criticality tier, operational evidence, and maintenance review priority. It is not a failure prediction or outage prediction model.
 
+## Outage Prediction
+
+Run local outage-risk prediction against validated interim data:
+
+```bash
+python3 -m grid_reliability.outage_prediction.pipeline --config configs/outage_prediction.yaml
+```
+
+Run the small profile end to end:
+
+```bash
+python3 -m grid_reliability.data_generation.pipeline --config configs/synthetic_data_ci.yaml
+python3 -m grid_reliability.ingestion.pipeline --config configs/ingestion_ci.yaml
+python3 -m grid_reliability.outage_prediction.pipeline --config configs/outage_prediction_ci.yaml
+```
+
+The CI profile predicts feeder-level unplanned outage risk within the next configured interval. Labels are leakage-safe: an outage is positive only when it starts after the observation timestamp and on or before the prediction horizon boundary. Planned outages are excluded.
+
+Outputs are written under `outputs/outage_prediction/<run_id>/`, model metadata under `outputs/models/outage_prediction/<run_id>/`, and reports under `reports/outage_prediction/<run_id>/`. CSV outputs are Power BI-ready, but no Power BI dashboard is created.
+
 ## Planned Analytical and ML Use Cases
 
 - Short-term electricity-demand forecasting.
@@ -181,7 +202,7 @@ Outputs are written under `outputs/asset_health/<run_id>/` and reports under `re
 - Incident investigation.
 - Executive reliability reporting.
 
-Planned reliability measures include SAIDI, SAIFI, CAIDI, availability, outage frequency, outage duration, restoration performance, load forecast error, and asset risk distribution. These measures are not implemented yet.
+Planned reliability measures include SAIDI, SAIFI, CAIDI, availability, outage frequency, outage duration, restoration performance, load forecast error, and fleet risk distribution. These measures are not implemented yet.
 
 ## Repository Structure
 
@@ -229,7 +250,7 @@ Planned reliability measures include SAIDI, SAIFI, CAIDI, availability, outage f
 3. Governed ingestion and data validation.
 4. Electricity demand forecasting.
 5. Asset health analytics.
-6. Operations reporting and GenAI assistance.
+6. Outage prediction.
 7. Azure deployment guidance.
 
 ## Local Setup
@@ -249,7 +270,7 @@ The foundation uses Ruff, mypy, pytest, coverage, typed settings, deterministic 
 
 ## Limitations and Current Status
 
-Only Milestones 1 through 5 are implemented. The repository contains architecture scaffolding, shared foundation utilities, synthetic source data generation, governed local ingestion, local demand forecasting, and local transparent asset-health analytics with manifests, metrics, CSV outputs, and reports. Reliability KPI calculations, failure prediction, outage prediction, anomaly-detection models, dashboards, GenAI workflows, and live Azure infrastructure remain future work. Generated runtime datasets, model artifacts, reports, dashboards, and Azure deployment artefacts are intentionally excluded from version control.
+Only Milestones 1 through 6 are implemented. The repository contains architecture scaffolding, shared foundation utilities, synthetic source data generation, governed local ingestion, local demand forecasting, local transparent asset-health analytics, and local synthetic outage-risk prediction with manifests, metrics, model metadata, CSV outputs, and reports. Reliability KPI calculations, asset-failure prediction, anomaly-detection models, dashboards, GenAI workflows, and live Azure infrastructure remain future work. Generated runtime datasets, model artifacts, reports, dashboards, and Azure deployment artefacts are intentionally excluded from version control.
 
 ## Licence
 

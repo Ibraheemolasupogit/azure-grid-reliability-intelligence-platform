@@ -34,14 +34,18 @@ Implemented validated interim-only asset-health scoring, default smart-meter exc
 
 Failure prediction, outage prediction, reliability KPI calculation, anomaly detection, dashboards, optimisation, GenAI, Spark, and Azure deployment remain out of scope.
 
-## Milestone 5b: Outage Risk and Anomaly Detection
+## Milestone 6: Outage Prediction
 
-Planned outage-risk analytics and anomaly detection. These are not implemented by Milestone 5 asset-health analytics.
+Status: implemented for outage prediction only.
 
-## Milestone 6: Operations Reporting and GenAI Assistance
+Implemented validated interim-only outage-risk prediction, feeder/substation/primary-asset entity semantics, leakage-safe future unplanned-outage labels, historical operational/weather/smart-meter/asset/maintenance/prior-outage features, chronological splitting with purge, baselines, deterministic logistic regression, class weighting, rare-event metrics, raw-score calibration metadata, model selection, risk bands, reason codes, manifests, model metadata, reports, Makefile targets, and CI checks.
+
+Reliability KPIs, separate asset-failure probability models, anomaly detection, dashboards, automated response, restoration optimisation, GenAI, Spark, and Azure deployment remain out of scope.
+
+## Milestone 7: Operations Reporting and GenAI Assistance
 
 Planned Power BI-ready outputs, monitoring views, incident investigation workflows, and provider-neutral GenAI assistant interfaces mapped to Azure AI Foundry.
 
-## Milestone 7: Azure Deployment Guidance
+## Milestone 8: Azure Deployment Guidance
 
-Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 5.
+Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 6.
