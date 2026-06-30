@@ -14,9 +14,8 @@ The current implementation provides repository structure, shared Python foundati
 
 ## Planned Platform Capabilities
 
-Future milestones will add synthetic meter, substation, weather, maintenance, and outage datasets; batch and event-driven ingestion; data quality checks; forecasting; anomaly detection; asset health analytics; reliability KPI calculation; reporting outputs; and GenAI-assisted incident analysis.
+Implemented milestones add synthetic meter, substation, weather, maintenance, and outage datasets; batch ingestion; data quality checks; forecasting; and asset-health analytics. Future milestones will add anomaly detection, reliability KPI calculation, reporting outputs, and GenAI-assisted incident analysis.
 
 ## Azure Subscription Boundary
 
 The repository documents Azure mappings but does not deploy or authenticate against Azure. Live Event Hubs, Storage, Synapse, Azure Data Explorer, Azure Machine Learning, Azure Monitor, Power BI, Purview, or Azure AI Foundry use would require a real Azure subscription and separate deployment work.
-

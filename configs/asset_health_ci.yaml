@@ -1,0 +1,46 @@
+profile: ci
+interim_root: data/interim
+output_root: outputs/asset_health
+report_root: reports/asset_health
+assessment_timestamp: "2026-01-01T06:00:00Z"
+included_asset_types:
+  - primary_substation
+  - secondary_substation
+  - transformer
+  - circuit_breaker
+  - feeder
+  - switchgear
+  - protection_relay
+minimum_data_completeness: 0.4
+lookback_days_maintenance: 365
+lookback_days_telemetry: 365
+lookback_days_outages: 365
+health_score_direction: higher_is_better
+health_band_thresholds:
+  critical_max: 35
+  degraded_max: 55
+  watch_max: 75
+priority_thresholds:
+  p1_max: 35
+  p2_max: 55
+  p3_max: 75
+component_weights:
+  age: 0.18
+  inspection: 0.17
+  maintenance: 0.20
+  telemetry_stress: 0.20
+  alarm: 0.10
+  outage: 0.15
+missing_data_policy: neutral
+criticality_mapping:
+  tier_1: 3
+  tier_2: 2
+  tier_3: 1
+status_mapping:
+  active: 0
+  standby: 1
+  maintenance: 2
+  retired: 3
+schema_version: "5.0.0"
+run_id_strategy: deterministic
+max_reason_codes: 5

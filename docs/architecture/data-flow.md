@@ -1,6 +1,6 @@
 # Data Flow
 
-Milestone 3 implements local governed movement from raw synthetic source files into interim and quarantine zones.
+Milestones 3 through 5 implement local governed movement from raw synthetic source files into interim and quarantine zones, then forecasting and asset-health analytics over validated interim data.
 
 ```mermaid
 flowchart LR
@@ -12,14 +12,17 @@ flowchart LR
     quarantine["Invalid quarantine JSONL<br/>data/quarantine/run_id"]
     reports["Metrics and audit reports<br/>reports/ingestion"]
     forecasting["Local demand forecasting<br/>outputs/forecasting"]
-    analytics["Anomaly, asset health, reliability analytics<br/>(future milestones)"]
+    assethealth["Local asset-health analytics<br/>outputs/asset_health"]
+    analytics["Anomaly and reliability analytics<br/>(future milestones)"]
     reporting["Power BI-ready outputs and operational monitoring<br/>(future milestones)"]
 
     inputs --> manifest --> ingestion --> validation
     validation --> interim --> forecasting --> analytics --> reporting
+    interim --> assethealth --> reporting
     validation --> quarantine --> reports
     interim --> reports
     forecasting --> reports
+    assethealth --> reports
 ```
 
 The matching Azure pattern is Event Hubs, Azure Functions or Stream Analytics, Data Lake Storage Gen2 raw/quarantine/silver zones, Azure Monitor or Application Insights, Microsoft Purview, Azure Data Explorer or Synapse, Azure Machine Learning, and Power BI. These are mappings only; no Azure resources are deployed.

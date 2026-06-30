@@ -1,4 +1,4 @@
-.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean
+.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean
 
 install:
 	python -m pip install --upgrade pip
@@ -50,6 +50,16 @@ forecast-demo: generate-data-ci ingest-data-ci forecast-data-ci
 	@echo "Forecast outputs written under outputs/forecasting/forecast-ci"
 	@echo "Forecast reports written under reports/forecasting/forecast-ci"
 
+assess-asset-health:
+	python3 -m grid_reliability.asset_health.pipeline --config configs/asset_health.yaml
+
+assess-asset-health-ci:
+	python3 -m grid_reliability.asset_health.pipeline --config configs/asset_health_ci.yaml
+
+asset-health-demo: generate-data-ci ingest-data-ci assess-asset-health-ci
+	@echo "Asset-health outputs written under outputs/asset_health/asset-health-ci"
+	@echo "Asset-health reports written under reports/asset_health/asset-health-ci"
+
 clean-data:
 	rm -f data/raw/smart_meter_events.jsonl data/raw/substation_events.jsonl data/raw/weather_data.csv data/raw/asset_inventory.csv data/raw/maintenance_logs.csv data/raw/outage_history.csv data/raw/_manifest.json
 
@@ -70,6 +80,12 @@ clean-model-artifacts:
 
 clean-forecast-reports:
 	rm -rf reports/forecasting
+
+clean-asset-health:
+	rm -rf outputs/asset_health
+
+clean-asset-health-reports:
+	rm -rf reports/asset_health
 
 clean:
 	rm -rf .pytest_cache .ruff_cache .mypy_cache htmlcov .coverage coverage.xml build dist *.egg-info

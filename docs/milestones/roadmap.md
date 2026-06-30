@@ -26,9 +26,17 @@ Implemented local short-term forecasting over validated interim telemetry, leaka
 
 Reliability KPI calculation remains out of scope for this milestone.
 
-## Milestone 5: Asset Health, Outage Risk, and Anomaly Detection
+## Milestone 5: Asset Health Analytics
 
-Planned asset health features, failure-risk assessment, anomaly detection, outage prediction, and maintenance prioritisation.
+Status: implemented for asset-health analytics only.
+
+Implemented validated interim-only asset-health scoring, default smart-meter exclusion, age and lifecycle features, inspection recency features, maintenance history features, operational telemetry stress features, outage-history evidence, bounded component scores, weighted health scores, health bands, reason codes, maintenance review priorities, manifests, metrics, CSV outputs, reports, tests, Makefile targets, and CI checks.
+
+Failure prediction, outage prediction, reliability KPI calculation, anomaly detection, dashboards, optimisation, GenAI, Spark, and Azure deployment remain out of scope.
+
+## Milestone 5b: Outage Risk and Anomaly Detection
+
+Planned outage-risk analytics and anomaly detection. These are not implemented by Milestone 5 asset-health analytics.
 
 ## Milestone 6: Operations Reporting and GenAI Assistance
 
@@ -36,4 +44,4 @@ Planned Power BI-ready outputs, monitoring views, incident investigation workflo
 
 ## Milestone 7: Azure Deployment Guidance
 
-Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 3.
+Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 5.

@@ -69,12 +69,29 @@ jobs:
           test -s reports/forecasting/forecast-ci/model_card.md
           test -s reports/forecasting/forecast-ci/executive_load_forecast_summary.md
 
+      - name: Run asset health with CI profile
+        run: python -m grid_reliability.asset_health.pipeline --config configs/asset_health_ci.yaml
+
+      - name: Verify asset-health outputs
+        run: |
+          test -s outputs/asset_health/asset-health-ci/asset_health_scores.csv
+          test -s outputs/asset_health/asset-health-ci/asset_health_components.csv
+          test -s outputs/asset_health/asset-health-ci/asset_health_reasons.csv
+          test -s outputs/asset_health/asset-health-ci/maintenance_priorities.csv
+          test -s outputs/asset_health/asset-health-ci/fleet_summary.json
+          test -s outputs/asset_health/asset-health-ci/metrics.json
+          test -s outputs/asset_health/asset-health-ci/asset_health_manifest.json
+          test -s reports/asset_health/asset-health-ci/asset_health_report.md
+          test -s reports/asset_health/asset-health-ci/maintenance_priority_report.md
+          test -s reports/asset_health/asset-health-ci/asset_health_methodology.md
+          test -s reports/asset_health/asset-health-ci/executive_asset_health_summary.md
+
       - name: Pytest with coverage
         run: python -m pytest --cov --cov-report=term-missing
 
       - name: Confirm runtime outputs remain untracked
         run: |
-          git status --short --ignored data outputs reports | grep -E '!! data/raw|!! data/interim|!! outputs/forecasting|!! reports/ingestion|!! reports/forecasting'
+          git status --short --ignored data outputs reports | grep -E '!! data/raw|!! data/interim|!! outputs/forecasting|!! outputs/asset_health|!! reports/ingestion|!! reports/forecasting|!! reports/asset_health'
 
       - name: Clean generated runtime outputs
         run: |
@@ -85,3 +102,5 @@ jobs:
           make clean-forecasting
           make clean-model-artifacts
           make clean-forecast-reports
+          make clean-asset-health
+          make clean-asset-health-reports

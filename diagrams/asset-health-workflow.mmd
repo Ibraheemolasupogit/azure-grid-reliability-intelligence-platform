@@ -1,0 +1,17 @@
+flowchart LR
+    raw["Synthetic raw data<br/>data/raw"]
+    ingestion["Governed ingestion<br/>contract and relationship validation"]
+    interim["Validated interim JSONL<br/>data/interim"]
+    assets["Eligible network assets<br/>smart meters excluded"]
+    features["Feature derivation<br/>age, inspection, maintenance, telemetry, outage"]
+    components["Component scores<br/>0 poorest, 100 strongest"]
+    health["Health score and band"]
+    priority["Maintenance review priority"]
+    outputs["CSV, JSON, manifest<br/>outputs/asset_health"]
+    reports["Markdown reports<br/>reports/asset_health"]
+
+    raw --> ingestion --> interim --> assets --> features --> components
+    components --> health --> priority
+    health --> outputs
+    priority --> outputs
+    outputs --> reports

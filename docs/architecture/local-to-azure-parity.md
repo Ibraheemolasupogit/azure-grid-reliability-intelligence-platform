@@ -16,11 +16,13 @@ The platform is designed to demonstrate engineering patterns locally before clou
 - Ingestion metrics, audit manifests, and Markdown quality reports.
 - Local short-term forecasting over validated interim telemetry.
 - Forecast CSVs, model comparison metrics, model metadata, manifests, and Markdown model reports.
+- Local transparent asset-health analytics over validated interim data.
+- Asset-health CSVs, component evidence, reason codes, priorities, manifests, metrics, and Markdown reports.
 - Tests and static quality checks.
 
 ## What Is Planned Locally
 
-- Local analytical tables beyond forecasting.
+- Local analytical tables beyond forecasting and asset health.
 - Local metrics, reporting extracts, and investigation workflows.
 
 ## What Requires Azure
