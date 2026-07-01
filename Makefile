@@ -1,4 +1,4 @@
-.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo predict-outages predict-outages-ci outage-prediction-demo calculate-reliability calculate-reliability-ci reliability-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean-outage-prediction clean-outage-models clean-outage-reports clean-reliability clean-reliability-reports clean
+.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo predict-outages predict-outages-ci outage-prediction-demo calculate-reliability calculate-reliability-ci reliability-demo monitor-platform monitor-platform-ci monitoring-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean-outage-prediction clean-outage-models clean-outage-reports clean-reliability clean-reliability-reports clean-monitoring clean-monitoring-reports clean
 
 install:
 	python -m pip install --upgrade pip
@@ -81,6 +81,16 @@ reliability-demo: generate-data-ci ingest-data-ci calculate-reliability-ci
 	@echo "Reliability outputs written under outputs/reliability/reliability-ci"
 	@echo "Reliability reports written under reports/reliability/reliability-ci"
 
+monitor-platform:
+	python3 -m grid_reliability.monitoring.pipeline --config configs/monitoring.yaml
+
+monitor-platform-ci:
+	python3 -m grid_reliability.monitoring.pipeline --config configs/monitoring_ci.yaml
+
+monitoring-demo: generate-data-ci ingest-data-ci forecast-data-ci assess-asset-health-ci predict-outages-ci calculate-reliability-ci monitor-platform-ci
+	@echo "Monitoring outputs written under outputs/monitoring"
+	@echo "Monitoring reports written under reports/monitoring/monitoring-ci"
+
 clean-data:
 	rm -f data/raw/smart_meter_events.jsonl data/raw/substation_events.jsonl data/raw/weather_data.csv data/raw/asset_inventory.csv data/raw/maintenance_logs.csv data/raw/outage_history.csv data/raw/_manifest.json
 
@@ -122,6 +132,12 @@ clean-reliability:
 
 clean-reliability-reports:
 	rm -rf reports/reliability
+
+clean-monitoring:
+	rm -rf outputs/monitoring
+
+clean-monitoring-reports:
+	rm -rf reports/monitoring
 
 clean:
 	rm -rf .pytest_cache .ruff_cache .mypy_cache htmlcov .coverage coverage.xml build dist *.egg-info

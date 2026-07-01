@@ -1,0 +1,10 @@
+flowchart TD
+    manifests["Pipeline manifests and metrics"] --> discovery["Monitoring source discovery"]
+    discovery --> checks["Pipeline / data / model / analytical checks"]
+    checks --> freshness["Freshness"]
+    checks --> drift["Drift checks"]
+    checks --> performance["Performance"]
+    freshness --> alerts["Alert rules"]
+    drift --> alerts
+    performance --> alerts
+    alerts --> outputs["Monitoring outputs, manifest, and reports"]

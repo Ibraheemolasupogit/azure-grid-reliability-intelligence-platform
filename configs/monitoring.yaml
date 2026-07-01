@@ -1,0 +1,73 @@
+profile: default
+source_roots:
+  data_generation: data/raw
+  ingestion: reports/ingestion
+  forecasting: outputs/forecasting
+  asset_health: outputs/asset_health
+  outage_prediction: outputs/outage_prediction
+  reliability: outputs/reliability
+output_root: outputs/monitoring
+report_root: reports/monitoring
+baseline_root:
+component_inclusion:
+  - data_generation
+  - ingestion
+  - forecasting
+  - asset_health
+  - outage_prediction
+  - reliability
+required_components:
+  - ingestion
+  - forecasting
+  - asset_health
+  - outage_prediction
+  - reliability
+freshness_thresholds:
+  smart_meter_events: 1440
+  substation_events: 1440
+  weather_data: 1440
+  asset_inventory: 525600
+  maintenance_logs: 43200
+  outage_history: 43200
+minimum_expected_records:
+  smart_meter_events: 1
+  substation_events: 1
+  weather_data: 1
+  asset_inventory: 1
+  maintenance_logs: 0
+  outage_history: 0
+maximum_expected_records:
+  smart_meter_events: 1000000
+  substation_events: 1000000
+  weather_data: 1000000
+  asset_inventory: 100000
+  maintenance_logs: 100000
+  outage_history: 100000
+quality_error_rate_threshold: 0.01
+quality_warning_rate_threshold: 0.1
+schema_drift_policy: warn
+distribution_drift_method: standardised_mean_difference
+distribution_drift_threshold: 15.0
+forecast_mae_threshold: 500.0
+forecast_wape_threshold: 0.5
+forecast_bias_threshold: 200.0
+outage_precision_threshold: 0.2
+outage_recall_threshold: 0.2
+outage_brier_threshold: 0.4
+asset_health_distribution_threshold: 15.0
+reliability_distribution_threshold: 15.0
+alert_severity_mapping:
+  DATA_VERY_STALE: HIGH
+  COMPONENT_RUN_FAILED: CRITICAL
+  CHECKSUM_MISMATCH: HIGH
+  BREAKING_SCHEMA_DRIFT: HIGH
+alert_suppression_rules:
+  suppress_info_alerts: true
+  suppress_repeated_alert_for_same_run: true
+  suppress_insufficient_sample_alerts: true
+  suppress_downstream_alerts_when_source_failed: false
+minimum_sample_size: 2
+comparison_window: 1
+schema_version: 8.0.0
+run_id_strategy: timestamp
+monitoring_timestamp: "2026-01-02T00:00:00Z"

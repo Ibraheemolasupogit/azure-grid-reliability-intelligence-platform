@@ -124,12 +124,36 @@ jobs:
           test -s reports/reliability/reliability-ci/reliability_methodology.md
           test -s reports/reliability/reliability-ci/executive_reliability_summary.md
 
+      - name: Run operational monitoring with CI profile
+        run: python -m grid_reliability.monitoring.pipeline --config configs/monitoring_ci.yaml
+
+      - name: Verify monitoring outputs
+        run: |
+          test -s outputs/monitoring/monitoring_summary.csv
+          test -s outputs/monitoring/alerts.csv
+          test -s outputs/monitoring/monitoring-ci/pipeline_health.csv
+          test -s outputs/monitoring/monitoring-ci/data_freshness.csv
+          test -s outputs/monitoring/monitoring-ci/data_volume.csv
+          test -s outputs/monitoring/monitoring-ci/data_quality_trends.csv
+          test -s outputs/monitoring/monitoring-ci/schema_drift.csv
+          test -s outputs/monitoring/monitoring-ci/distribution_drift.csv
+          test -s outputs/monitoring/monitoring-ci/model_health.csv
+          test -s outputs/monitoring/monitoring-ci/analytical_health.csv
+          test -s outputs/monitoring/monitoring-ci/alert_evaluations.csv
+          test -s outputs/monitoring/monitoring-ci/metrics.json
+          test -s outputs/monitoring/monitoring-ci/monitoring_manifest.json
+          test -s reports/monitoring/monitoring-ci/operational_health_report.md
+          test -s reports/monitoring/monitoring-ci/data_quality_monitoring_report.md
+          test -s reports/monitoring/monitoring-ci/model_monitoring_report.md
+          test -s reports/monitoring/monitoring-ci/alert_summary.md
+          test -s reports/monitoring/monitoring-ci/executive_monitoring_summary.md
+
       - name: Pytest with coverage
         run: python -m pytest --cov --cov-report=term-missing
 
       - name: Confirm runtime outputs remain untracked
         run: |
-          git status --short --ignored data outputs reports | grep -E '!! data/raw|!! data/interim|!! outputs/forecasting|!! outputs/asset_health|!! outputs/outage_prediction|!! outputs/reliability|!! reports/ingestion|!! reports/forecasting|!! reports/asset_health|!! reports/outage_prediction|!! reports/reliability'
+          git status --short --ignored data outputs reports | grep -E '!! data/raw|!! data/interim|!! outputs/forecasting|!! outputs/asset_health|!! outputs/outage_prediction|!! outputs/reliability|!! outputs/monitoring|!! reports/ingestion|!! reports/forecasting|!! reports/asset_health|!! reports/outage_prediction|!! reports/reliability|!! reports/monitoring'
 
       - name: Clean generated runtime outputs
         run: |
@@ -147,3 +171,5 @@ jobs:
           make clean-outage-reports
           make clean-reliability
           make clean-reliability-reports
+          make clean-monitoring
+          make clean-monitoring-reports

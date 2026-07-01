@@ -22,19 +22,22 @@ The platform is designed to demonstrate engineering patterns locally before clou
 - Outage-risk CSVs, metrics, model metadata, manifests, risk bands, reason codes, and Markdown reports.
 - Local reliability KPI analytics over validated outage and network data.
 - Reliability KPI CSVs, trends, benchmarks, scores, manifests, metrics, and Markdown reports.
+- Local operational monitoring over runtime manifests, metrics, datasets, contracts, model outputs, and analytical scores.
+- Monitoring CSVs, alert evaluations, metrics, manifests, and Markdown reports.
 - Tests and static quality checks.
 
 ## What Is Planned Locally
 
 - Local analytical tables beyond forecasting, asset health, outage prediction, and reliability KPIs.
-- Local metrics, reporting extracts, and investigation workflows.
+- Local investigation workflows and future dashboard-ready extracts beyond the structured monitoring records already emitted.
 
 ## What Requires Azure
 
 - Event Hubs namespaces and event streams.
 - Data Lake Storage Gen2 accounts and containers.
 - Synapse, Azure Data Explorer, Azure Machine Learning, Azure Monitor, Power BI, Purview, and Azure AI Foundry resources.
+- Live Azure Monitor ingestion, Application Insights SDK connectivity, Log Analytics workspaces, and alert action groups.
 - Online model endpoints, model registry deployment, and production retraining orchestration.
 - Identity, networking, RBAC, private endpoints, and production-grade observability.
 
-Local simulations demonstrate architecture and delivery patterns, not live Azure deployment.
+Local simulations demonstrate architecture and delivery patterns, not live Azure deployment. Milestone 8 monitoring outputs map conceptually to Azure Monitor, Application Insights, Log Analytics, Azure Machine Learning monitoring, Microsoft Purview, and Power BI, but they remain local files.

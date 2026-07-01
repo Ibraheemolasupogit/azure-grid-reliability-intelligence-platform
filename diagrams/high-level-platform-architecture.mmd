@@ -7,7 +7,8 @@ flowchart TD
     synapse["Azure Synapse Analytics<br/>(planned)"]
     aml["Azure Machine Learning<br/>(planned)"]
     intelligence["Forecasting, asset-health, outage-risk, reliability analytics<br/>(local)"]
-    operations["Power BI, Azure Monitor, Grid Operations Copilot<br/>(planned)"]
+    monitoring["Operational monitoring and observability<br/>(local)"]
+    operations["Power BI, Azure Monitor, Grid Operations Copilot<br/>(planned cloud targets)"]
     users["Operators and decision-makers"]
 
     sources --> event_hubs --> stream --> lake
@@ -15,4 +16,4 @@ flowchart TD
     lake --> synapse
     adx --> aml
     synapse --> aml
-    aml --> intelligence --> operations --> users
+    aml --> intelligence --> monitoring --> operations --> users

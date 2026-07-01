@@ -50,10 +50,14 @@ Implemented validated interim-only reliability analytics, observed-meter populat
 
 Regulatory submissions, real operator benchmarking, financial-loss estimation, dashboards, optimisation, GenAI, Spark, and Azure deployment remain out of scope.
 
-## Milestone 8: Operations Reporting and GenAI Assistance
+## Milestone 8: Operational Monitoring and Data/Model Observability
 
-Planned Power BI-ready outputs, monitoring views, incident investigation workflows, and provider-neutral GenAI assistant interfaces mapped to Azure AI Foundry.
+Status: implemented for local monitoring and observability only.
+
+Implemented deterministic local component discovery, pipeline-health checks, freshness and volume checks, ingestion quality trends, schema drift records, distribution drift records, forecast monitoring, outage-prediction monitoring, asset-health and reliability analytical monitoring, alert-rule evaluation, alert suppression, metrics, manifests, CSV outputs, Markdown reports, Makefile targets, and CI checks.
+
+Live Azure Monitor ingestion, Application Insights SDK connectivity, Log Analytics workspaces, external alert delivery, dashboards, automated retraining, automated remediation, GenAI, Spark, and Azure deployment remain out of scope.
 
 ## Milestone 9: Azure Deployment Guidance
 
-Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 7.
+Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 8.
