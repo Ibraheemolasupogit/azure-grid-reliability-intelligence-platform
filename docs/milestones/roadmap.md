@@ -58,6 +58,14 @@ Implemented deterministic local component discovery, pipeline-health checks, fre
 
 Live Azure Monitor ingestion, Application Insights SDK connectivity, Log Analytics workspaces, external alert delivery, dashboards, automated retraining, automated remediation, GenAI, Spark, and Azure deployment remain out of scope.
 
-## Milestone 9: Azure Deployment Guidance
+## Milestone 9: GenAI Grid Operations Assistant
 
-Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 8.
+Status: implemented for local deterministic retrieval-grounded assistance only.
+
+Implemented approved source discovery, extraction, deterministic chunking, local lexical indexing, query classification, retrieval, grounding checks, critical-infrastructure safety refusals, provider-neutral generation, deterministic local responses, citations, prompt-audit metadata, retrieval records, safety records, evaluation outputs, metrics, manifests, reports, Makefile targets, and CI checks.
+
+Azure OpenAI, Azure AI Foundry calls, Azure AI Search, external embeddings, vector databases, agent frameworks, live operational control, alert suppression actions, automated dispatch, dashboards, and Azure deployment remain out of scope.
+
+## Milestone 10: Azure Deployment Guidance
+
+Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 9.

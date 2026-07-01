@@ -1,0 +1,9 @@
+flowchart TD
+    evidence["Approved reports, metrics, and manifests"] --> governance["Source governance and extraction"]
+    governance --> index["Chunking and local index"]
+    index --> retrieval["Query classification and retrieval"]
+    retrieval --> checks["Grounding and safety checks"]
+    checks --> grounded["Grounded response"]
+    checks --> refusal["Refusal or qualification"]
+    grounded --> audit["Citations, audit, metrics, and reports"]
+    refusal --> audit

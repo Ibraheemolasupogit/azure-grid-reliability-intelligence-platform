@@ -1,6 +1,6 @@
 # Data Flow
 
-Milestones 3 through 8 implement local governed movement from raw synthetic source files into interim and quarantine zones, then forecasting, asset-health analytics, outage prediction, reliability KPI analytics, and operational monitoring over validated runtime evidence.
+Milestones 3 through 9 implement local governed movement from raw synthetic source files into interim and quarantine zones, then forecasting, asset-health analytics, outage prediction, reliability KPI analytics, operational monitoring, and retrieval-grounded assistant responses over governed runtime evidence.
 
 ```mermaid
 flowchart LR
@@ -17,10 +17,11 @@ flowchart LR
     reliability["Local reliability analytics<br/>outputs/reliability"]
     analytics["Anomaly analytics<br/>(future milestones)"]
     monitoring["Local operational monitoring<br/>outputs/monitoring"]
+    assistant["Local grid operations assistant<br/>outputs/genai"]
     reporting["Power BI-ready outputs and reports<br/>(local artifacts)"]
 
     inputs --> manifest --> ingestion --> validation
-    validation --> interim --> forecasting --> analytics --> monitoring --> reporting
+    validation --> interim --> forecasting --> analytics --> monitoring --> assistant --> reporting
     interim --> assethealth --> monitoring
     interim --> outage --> monitoring
     interim --> reliability --> monitoring
@@ -31,6 +32,7 @@ flowchart LR
     outage --> reports
     reliability --> reports
     monitoring --> reports
+    assistant --> reports
 ```
 
 The matching Azure pattern is Event Hubs, Azure Functions or Stream Analytics, Data Lake Storage Gen2 raw/quarantine/silver zones, Azure Monitor or Application Insights, Microsoft Purview, Azure Data Explorer or Synapse, Azure Machine Learning, and Power BI. These are mappings only; no Azure resources are deployed.

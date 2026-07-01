@@ -1,0 +1,63 @@
+profile: default
+source_roots:
+  - reports
+  - outputs
+  - docs
+  - configs/data_contracts
+approved_components:
+  - ingestion
+  - forecasting
+  - asset_health
+  - outage_prediction
+  - reliability
+  - monitoring
+  - documentation
+  - contracts
+approved_file_patterns:
+  - "*.md"
+  - "*.json"
+  - "*.csv"
+  - "*.yaml"
+  - "*.yml"
+excluded_file_patterns:
+  - "data/raw/*"
+  - "data/quarantine/*"
+  - ".env*"
+  - "**/__pycache__/*"
+  - "outputs/genai/*"
+  - "reports/genai/*"
+index_root: outputs/genai/index
+output_root: outputs/genai
+report_root: reports/genai
+provider: deterministic_local
+retrieval_method: lexical_bm25
+top_k: 5
+minimum_relevance_score: 0.05
+maximum_context_chunks: 5
+maximum_context_characters: 6000
+chunk_size_characters: 1200
+chunk_overlap_characters: 120
+citation_required: true
+minimum_grounding_coverage: 0.35
+allowed_query_categories:
+  - grid_status
+  - forecast_summary
+  - asset_health
+  - maintenance_priority
+  - outage_risk
+  - reliability_performance
+  - monitoring_alerts
+  - incident_investigation
+  - executive_summary
+  - methodology
+restricted_action_patterns:
+  - open breaker
+  - switch feeder
+  - override protection
+  - suppress alert
+  - dispatch crew
+safety_refusal_mode: refuse_and_redirect
+synthetic_data_disclaimer: "All evidence is fictional synthetic repository-local data."
+schema_version: 9.0.0
+run_id_strategy: timestamp
+query_timestamp: "2026-01-02T00:00:00Z"

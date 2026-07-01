@@ -24,12 +24,14 @@ The platform is designed to demonstrate engineering patterns locally before clou
 - Reliability KPI CSVs, trends, benchmarks, scores, manifests, metrics, and Markdown reports.
 - Local operational monitoring over runtime manifests, metrics, datasets, contracts, model outputs, and analytical scores.
 - Monitoring CSVs, alert evaluations, metrics, manifests, and Markdown reports.
+- Local retrieval-grounded grid operations assistant over approved repository evidence.
+- Assistant responses, citations, retrieval records, prompt-audit metadata, safety records, evaluation outputs, metrics, manifests, and reports.
 - Tests and static quality checks.
 
 ## What Is Planned Locally
 
 - Local analytical tables beyond forecasting, asset health, outage prediction, and reliability KPIs.
-- Local investigation workflows and future dashboard-ready extracts beyond the structured monitoring records already emitted.
+- Future dashboard-ready extracts beyond the structured monitoring and assistant records already emitted.
 
 ## What Requires Azure
 
@@ -37,7 +39,8 @@ The platform is designed to demonstrate engineering patterns locally before clou
 - Data Lake Storage Gen2 accounts and containers.
 - Synapse, Azure Data Explorer, Azure Machine Learning, Azure Monitor, Power BI, Purview, and Azure AI Foundry resources.
 - Live Azure Monitor ingestion, Application Insights SDK connectivity, Log Analytics workspaces, and alert action groups.
+- Azure AI Foundry, Azure OpenAI, Azure AI Search, and external model hosting.
 - Online model endpoints, model registry deployment, and production retraining orchestration.
 - Identity, networking, RBAC, private endpoints, and production-grade observability.
 
-Local simulations demonstrate architecture and delivery patterns, not live Azure deployment. Milestone 8 monitoring outputs map conceptually to Azure Monitor, Application Insights, Log Analytics, Azure Machine Learning monitoring, Microsoft Purview, and Power BI, but they remain local files.
+Local simulations demonstrate architecture and delivery patterns, not live Azure deployment. Milestone 8 monitoring outputs map conceptually to Azure Monitor, Application Insights, Log Analytics, Azure Machine Learning monitoring, Microsoft Purview, and Power BI. Milestone 9 assistant outputs map conceptually to Azure AI Foundry, Azure AI Search, Azure Monitor/Application Insights, and Microsoft Purview. They remain local files.

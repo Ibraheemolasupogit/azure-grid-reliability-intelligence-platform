@@ -1,4 +1,4 @@
-.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo predict-outages predict-outages-ci outage-prediction-demo calculate-reliability calculate-reliability-ci reliability-demo monitor-platform monitor-platform-ci monitoring-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean-outage-prediction clean-outage-models clean-outage-reports clean-reliability clean-reliability-reports clean-monitoring clean-monitoring-reports clean
+.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo predict-outages predict-outages-ci outage-prediction-demo calculate-reliability calculate-reliability-ci reliability-demo monitor-platform monitor-platform-ci monitoring-demo build-assistant-index run-assistant run-assistant-ci evaluate-assistant assistant-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean-outage-prediction clean-outage-models clean-outage-reports clean-reliability clean-reliability-reports clean-monitoring clean-monitoring-reports clean-assistant clean-assistant-reports clean
 
 install:
 	python -m pip install --upgrade pip
@@ -91,6 +91,22 @@ monitoring-demo: generate-data-ci ingest-data-ci forecast-data-ci assess-asset-h
 	@echo "Monitoring outputs written under outputs/monitoring"
 	@echo "Monitoring reports written under reports/monitoring/monitoring-ci"
 
+build-assistant-index:
+	python3 -m grid_reliability.genai.pipeline --config configs/genai_assistant.yaml
+
+run-assistant:
+	python3 -m grid_reliability.genai.pipeline --config configs/genai_assistant.yaml
+
+run-assistant-ci:
+	python3 -m grid_reliability.genai.pipeline --config configs/genai_assistant_ci.yaml
+
+evaluate-assistant: run-assistant-ci
+	@echo "Assistant evaluation written under outputs/genai/assistant-ci"
+
+assistant-demo: monitoring-demo run-assistant-ci
+	@echo "Assistant outputs written under outputs/genai"
+	@echo "Assistant reports written under reports/genai/assistant-ci"
+
 clean-data:
 	rm -f data/raw/smart_meter_events.jsonl data/raw/substation_events.jsonl data/raw/weather_data.csv data/raw/asset_inventory.csv data/raw/maintenance_logs.csv data/raw/outage_history.csv data/raw/_manifest.json
 
@@ -138,6 +154,12 @@ clean-monitoring:
 
 clean-monitoring-reports:
 	rm -rf reports/monitoring
+
+clean-assistant:
+	rm -rf outputs/genai
+
+clean-assistant-reports:
+	rm -rf reports/genai
 
 clean:
 	rm -rf .pytest_cache .ruff_cache .mypy_cache htmlcov .coverage coverage.xml build dist *.egg-info

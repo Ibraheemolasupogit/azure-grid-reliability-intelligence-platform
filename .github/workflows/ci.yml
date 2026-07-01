@@ -148,12 +148,32 @@ jobs:
           test -s reports/monitoring/monitoring-ci/alert_summary.md
           test -s reports/monitoring/monitoring-ci/executive_monitoring_summary.md
 
+      - name: Run GenAI assistant with CI profile
+        run: python -m grid_reliability.genai.pipeline --config configs/genai_assistant_ci.yaml
+
+      - name: Verify GenAI assistant outputs
+        run: |
+          test -s outputs/genai/grid_operations_responses.jsonl
+          test -s outputs/genai/assistant-ci/retrieval_results.jsonl
+          test -s outputs/genai/assistant-ci/citations.json
+          test -s outputs/genai/assistant-ci/prompt_audit.jsonl
+          test -s outputs/genai/assistant-ci/safety_evaluations.jsonl
+          test -s outputs/genai/assistant-ci/evaluation_results.csv
+          test -s outputs/genai/assistant-ci/metrics.json
+          test -s outputs/genai/assistant-ci/assistant_manifest.json
+          test -s reports/genai/assistant-ci/assistant_operations_report.md
+          test -s reports/genai/assistant-ci/grounding_and_citation_report.md
+          test -s reports/genai/assistant-ci/safety_report.md
+          test -s reports/genai/assistant-ci/assistant_methodology.md
+          test -s reports/genai/assistant-ci/executive_assistant_summary.md
+          test -s reports/genai/assistant-ci/assistant_evaluation.md
+
       - name: Pytest with coverage
         run: python -m pytest --cov --cov-report=term-missing
 
       - name: Confirm runtime outputs remain untracked
         run: |
-          git status --short --ignored data outputs reports | grep -E '!! data/raw|!! data/interim|!! outputs/forecasting|!! outputs/asset_health|!! outputs/outage_prediction|!! outputs/reliability|!! outputs/monitoring|!! reports/ingestion|!! reports/forecasting|!! reports/asset_health|!! reports/outage_prediction|!! reports/reliability|!! reports/monitoring'
+          git status --short --ignored data outputs reports | grep -E '!! data/raw|!! data/interim|!! outputs/forecasting|!! outputs/asset_health|!! outputs/outage_prediction|!! outputs/reliability|!! outputs/monitoring|!! outputs/genai|!! reports/ingestion|!! reports/forecasting|!! reports/asset_health|!! reports/outage_prediction|!! reports/reliability|!! reports/monitoring|!! reports/genai'
 
       - name: Clean generated runtime outputs
         run: |
@@ -173,3 +193,5 @@ jobs:
           make clean-reliability-reports
           make clean-monitoring
           make clean-monitoring-reports
+          make clean-assistant
+          make clean-assistant-reports

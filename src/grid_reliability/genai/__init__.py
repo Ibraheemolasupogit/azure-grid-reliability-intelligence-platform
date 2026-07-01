@@ -1,1 +1,1 @@
-"""Package boundary for planned GenAI operations assistant components."""
+"""Local retrieval-grounded grid operations assistant."""
