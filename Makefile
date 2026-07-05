@@ -1,4 +1,4 @@
-.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo predict-outages predict-outages-ci outage-prediction-demo calculate-reliability calculate-reliability-ci reliability-demo monitor-platform monitor-platform-ci monitoring-demo build-assistant-index run-assistant run-assistant-ci evaluate-assistant assistant-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean-outage-prediction clean-outage-models clean-outage-reports clean-reliability clean-reliability-reports clean-monitoring clean-monitoring-reports clean-assistant clean-assistant-reports clean
+.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo predict-outages predict-outages-ci outage-prediction-demo calculate-reliability calculate-reliability-ci reliability-demo monitor-platform monitor-platform-ci monitoring-demo build-assistant-index run-assistant run-assistant-ci evaluate-assistant assistant-demo build-reporting-model build-reporting-model-ci validate-reporting-model reporting-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean-outage-prediction clean-outage-models clean-outage-reports clean-reliability clean-reliability-reports clean-monitoring clean-monitoring-reports clean-assistant clean-assistant-reports clean-reporting clean-reporting-reports clean
 
 install:
 	python -m pip install --upgrade pip
@@ -107,6 +107,20 @@ assistant-demo: monitoring-demo run-assistant-ci
 	@echo "Assistant outputs written under outputs/genai"
 	@echo "Assistant reports written under reports/genai/assistant-ci"
 
+build-reporting-model:
+	python3 -m grid_reliability.reporting.pipeline --config configs/reporting.yaml
+
+build-reporting-model-ci:
+	python3 -m grid_reliability.reporting.pipeline --config configs/reporting_ci.yaml
+
+validate-reporting-model: build-reporting-model-ci
+	@echo "Reporting validation written under outputs/reporting/reporting-ci"
+
+reporting-demo: assistant-demo build-reporting-model-ci
+	@echo "Reporting datasets written under outputs/reporting/reporting-ci"
+	@echo "Reporting reports written under reports/reporting/reporting-ci"
+	@echo "Dashboard specifications written under dashboard/"
+
 clean-data:
 	rm -f data/raw/smart_meter_events.jsonl data/raw/substation_events.jsonl data/raw/weather_data.csv data/raw/asset_inventory.csv data/raw/maintenance_logs.csv data/raw/outage_history.csv data/raw/_manifest.json
 
@@ -160,6 +174,12 @@ clean-assistant:
 
 clean-assistant-reports:
 	rm -rf reports/genai
+
+clean-reporting:
+	rm -rf outputs/reporting
+
+clean-reporting-reports:
+	rm -rf reports/reporting
 
 clean:
 	rm -rf .pytest_cache .ruff_cache .mypy_cache htmlcov .coverage coverage.xml build dist *.egg-info

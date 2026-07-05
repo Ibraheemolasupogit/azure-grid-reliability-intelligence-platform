@@ -66,6 +66,14 @@ Implemented approved source discovery, extraction, deterministic chunking, local
 
 Azure OpenAI, Azure AI Foundry calls, Azure AI Search, external embeddings, vector databases, agent frameworks, live operational control, alert suppression actions, automated dispatch, dashboards, and Azure deployment remain out of scope.
 
-## Milestone 10: Azure Deployment Guidance
+## Milestone 10: Power BI-Ready Dashboard Outputs and Executive Reporting
 
-Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 9.
+Status: implemented for local reporting outputs, dashboard specifications, and executive reports only.
+
+Implemented governed reporting source discovery, deterministic key generation, dimensions, facts, bridge tables, relationship validation, KPI catalogue, DAX text definitions, Power BI-ready CSV exports, dashboard page specifications, wireframes, reporting manifest, metrics, reports, Makefile targets, and CI checks.
+
+Power BI Desktop files, Power BI/Fabric workspace deployment, REST API calls, live refresh, embedded dashboards, and Azure deployment remain out of scope.
+
+## Milestone 11: Azure Deployment Guidance
+
+Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 10.

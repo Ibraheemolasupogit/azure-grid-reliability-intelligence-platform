@@ -1,0 +1,63 @@
+source_roots:
+  - data/interim
+  - outputs/forecasting
+  - outputs/asset_health
+  - outputs/outage_prediction
+  - outputs/reliability
+  - outputs/monitoring
+  - outputs/genai
+  - reports/forecasting
+  - reports/asset_health
+  - reports/outage_prediction
+  - reports/reliability
+  - reports/monitoring
+  - reports/genai
+output_root: outputs/reporting
+report_root: reports/reporting
+run_id: reporting-local
+included_components:
+  - forecasting
+  - asset_health
+  - outage_prediction
+  - reliability
+  - monitoring
+  - genai
+reporting_timezone: UTC
+date_dimension_start: "2026-01-01"
+date_dimension_end: "2026-01-07"
+fact_grains:
+  - forecast_entity_timestamp_model
+  - asset_assessment
+  - outage_entity_timestamp_model
+  - reliability_entity_period
+  - monitoring_check
+  - monitoring_alert
+  - assistant_response
+  - maintenance_priority
+dimension_inclusion:
+  - date
+  - time
+  - grid_region
+  - substation
+  - feeder
+  - asset
+  - model
+  - component_run
+  - alert_reason
+  - metric
+default_currency: GBP
+schema_version: "10.0.0"
+minimum_data_completeness: 0.0
+include_assistant_outputs: true
+include_monitoring_outputs: true
+dashboard_pages:
+  - 01_executive_overview
+  - 02_grid_operations
+  - 03_demand_forecasting
+  - 04_asset_health
+  - 05_outage_risk
+  - 06_reliability
+  - 07_data_model_monitoring
+  - 08_grid_operations_assistant
+  - 09_governance_and_lineage
+export_format: csv

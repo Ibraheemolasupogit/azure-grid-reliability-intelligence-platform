@@ -1,1 +1,1 @@
-"""Package boundary for planned reporting components."""
+"""Power BI-ready local reporting semantic layer."""

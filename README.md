@@ -2,7 +2,7 @@
 
 A local-first, Azure-mapped foundation for grid reliability and energy operations intelligence across synthetic telemetry, data quality, forecasting, asset health, outage risk, operational monitoring, retrieval-grounded assistance, and analytical reporting.
 
-This repository is currently at **Milestone 9: GenAI Grid Operations Assistant**. It establishes the engineering structure, shared foundations, deterministic fictional source data generation, governed local ingestion, reproducible local short-term forecasting, transparent asset-health scoring, leakage-safe synthetic outage-risk prediction, historical reliability KPI analytics, local monitoring over runtime manifests and metrics, and a deterministic retrieval-grounded assistant over repository evidence. It does not call external models, execute operational actions, build dashboards, deliver live alerts, or deploy Azure resources.
+This repository is currently at **Milestone 10: Power BI-Ready Dashboard Outputs and Executive Reporting**. It establishes the engineering structure, shared foundations, deterministic fictional source data generation, governed local ingestion, reproducible local short-term forecasting, transparent asset-health scoring, leakage-safe synthetic outage-risk prediction, historical reliability KPI analytics, local monitoring over runtime manifests and metrics, a deterministic retrieval-grounded assistant over repository evidence, and local Power BI-ready reporting outputs. It does not create `.pbix` files, deploy Power BI or Fabric workspaces, call external models, execute operational actions, deliver live alerts, or deploy Azure resources.
 
 ## Problem Statement
 
@@ -37,6 +37,7 @@ flowchart TD
     intelligence["Forecasting, asset-health, outage-risk, reliability analytics<br/>(local)"]
     monitoring["Operational monitoring and observability<br/>(local)"]
     assistant["Grid Operations Assistant<br/>(local retrieval grounded)"]
+    reporting["Power BI-ready semantic outputs<br/>(local CSV/specs)"]
     operations["Power BI, Azure Monitor, Azure AI Foundry<br/>(planned cloud targets)"]
     users["Operators and decision-makers"]
 
@@ -45,14 +46,14 @@ flowchart TD
     lake --> synapse
     adx --> aml
     synapse --> aml
-    aml --> intelligence --> monitoring --> assistant --> operations --> users
+    aml --> intelligence --> monitoring --> assistant --> reporting --> operations --> users
 ```
 
 Local simulations are intended to demonstrate architecture, testing, reproducibility, and engineering patterns. They are not evidence of live Azure deployment.
 
 ## Local-First and Azure Deployment
 
-Milestones 1 through 9 run locally and require no Azure credentials. Future milestones will document deployment guidance for Azure services. Any live Azure deployment would require a subscription, identity configuration, RBAC, networking, service provisioning, and operational monitoring outside the current milestone.
+Milestones 1 through 10 run locally and require no Azure credentials. Future milestones may document deployment guidance for Azure services. Any live Azure or Fabric deployment would require a subscription, identity configuration, RBAC, networking, service provisioning, workspace configuration, and operational monitoring outside the current milestone.
 
 ## Azure Service Mapping
 
@@ -66,7 +67,7 @@ Milestones 1 through 9 run locally and require no Azure credentials. Future mile
 | ML lifecycle | Local forecasting, asset-health, outage-risk, and reliability batch pipelines | Azure Machine Learning |
 | GenAI operations assistant | Deterministic local retrieval, lexical index, citations, safety checks, and provider-neutral interface | Azure AI Foundry and Azure AI Search |
 | Monitoring | Local observability CSV/JSON records, alert evaluations, metrics, manifests, and reports | Azure Monitor, Application Insights, Log Analytics, Azure Machine Learning monitoring, Microsoft Purview, and Power BI |
-| Reporting | CSV/Parquet analytical outputs | Microsoft Power BI |
+| Reporting | Local dimensions, facts, bridges, relationships, KPI catalogue, DAX text, dashboard specifications, and executive reports | Microsoft Power BI and Microsoft Fabric |
 | Governance | Local metadata and documentation | Microsoft Purview |
 
 ## Planned Datasets
@@ -248,6 +249,24 @@ The assistant discovers approved repository-local reports, metrics, manifests, o
 
 Outputs are written under `outputs/genai/` and reports under `reports/genai/<run_id>/`. The assistant cannot execute operations, suppress alerts, dispatch crews, call Azure AI Foundry, call Azure OpenAI, use Azure AI Search, or use external models.
 
+## Power BI-Ready Reporting
+
+Build local reporting semantic outputs against existing governed runtime artifacts:
+
+```bash
+python3 -m grid_reliability.reporting.pipeline --config configs/reporting.yaml
+```
+
+Run the small profile end to end:
+
+```bash
+make reporting-demo
+```
+
+Reporting discovers governed outputs from forecasting, asset health, outage prediction, reliability, monitoring, and the assistant; standardises keys; creates dimensions, facts, and bridge tables; validates relationships; writes a KPI catalogue, DAX text definitions, metrics, manifest, executive reports, dashboard page specifications, and wireframes.
+
+Outputs are written under `outputs/reporting/<run_id>/`, reports under `reports/reporting/<run_id>/`, and design assets under `dashboard/`. These are Power BI-ready local artifacts only; no `.pbix`, `.pbit`, Power BI workspace, Fabric workspace, gateway, scheduled refresh, app, REST API call, or Azure deployment is created.
+
 ## Planned Analytical and ML Use Cases
 
 - Short-term electricity-demand forecasting.
@@ -258,6 +277,7 @@ Outputs are written under `outputs/genai/` and reports under `reports/genai/<run
 - Reliability scoring.
 - Operational monitoring and observability.
 - Retrieval-grounded grid operations assistant.
+- Power BI-ready semantic reporting outputs.
 - Maintenance prioritisation.
 - Incident investigation.
 - Executive reliability reporting.
@@ -314,7 +334,8 @@ Implemented reliability measures include SAIDI, SAIFI, CAIDI, ASAI, ASUI, outage
 7. Grid reliability scoring and KPI analytics.
 8. Operational monitoring and observability.
 9. GenAI Grid Operations Assistant.
-10. Azure deployment guidance.
+10. Power BI-ready dashboard outputs and executive reporting.
+11. Azure deployment guidance.
 
 ## Local Setup
 
@@ -333,7 +354,7 @@ The foundation uses Ruff, mypy, pytest, coverage, typed settings, deterministic 
 
 ## Limitations and Current Status
 
-Only Milestones 1 through 9 are implemented. The repository contains architecture scaffolding, shared foundation utilities, synthetic source data generation, governed local ingestion, local demand forecasting, local transparent asset-health analytics, local synthetic outage-risk prediction, local reliability KPI analytics, local operational observability, and a local retrieval-grounded assistant with citations, safety checks, audit records, evaluation outputs, and reports. Asset-failure prediction, anomaly-detection models, dashboards, live external-model integrations, live alert delivery, and live Azure infrastructure remain future work. Generated runtime datasets, model artifacts, reports, monitoring outputs, assistant outputs, dashboards, and Azure deployment artefacts are intentionally excluded from version control.
+Only Milestones 1 through 10 are implemented. The repository contains architecture scaffolding, shared foundation utilities, synthetic source data generation, governed local ingestion, local demand forecasting, local transparent asset-health analytics, local synthetic outage-risk prediction, local reliability KPI analytics, local operational observability, a local retrieval-grounded assistant with citations, and local Power BI-ready reporting outputs with semantic documentation, dashboard specifications, and deterministic executive reports. Asset-failure prediction, anomaly-detection models, deployed dashboards, live external-model integrations, live alert delivery, and live Azure or Fabric infrastructure remain future work. Generated runtime datasets, model artifacts, reports, monitoring outputs, assistant outputs, reporting outputs, and Azure deployment artefacts are intentionally excluded from version control.
 
 ## Licence
 

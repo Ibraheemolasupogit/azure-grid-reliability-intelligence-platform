@@ -168,12 +168,54 @@ jobs:
           test -s reports/genai/assistant-ci/executive_assistant_summary.md
           test -s reports/genai/assistant-ci/assistant_evaluation.md
 
+      - name: Build reporting semantic outputs with CI profile
+        run: python -m grid_reliability.reporting.pipeline --config configs/reporting_ci.yaml
+
+      - name: Verify reporting semantic outputs
+        run: |
+          test -s outputs/reporting/reporting-ci/dim_date.csv
+          test -s outputs/reporting/reporting-ci/dim_time.csv
+          test -s outputs/reporting/reporting-ci/dim_grid_region.csv
+          test -s outputs/reporting/reporting-ci/dim_substation.csv
+          test -s outputs/reporting/reporting-ci/dim_feeder.csv
+          test -s outputs/reporting/reporting-ci/dim_asset.csv
+          test -s outputs/reporting/reporting-ci/dim_model.csv
+          test -s outputs/reporting/reporting-ci/dim_component_run.csv
+          test -s outputs/reporting/reporting-ci/dim_alert_reason.csv
+          test -s outputs/reporting/reporting-ci/dim_metric.csv
+          test -s outputs/reporting/reporting-ci/fact_demand_forecast.csv
+          test -s outputs/reporting/reporting-ci/fact_asset_health.csv
+          test -s outputs/reporting/reporting-ci/fact_outage_risk.csv
+          test -s outputs/reporting/reporting-ci/fact_reliability_kpi.csv
+          test -s outputs/reporting/reporting-ci/fact_monitoring_check.csv
+          test -s outputs/reporting/reporting-ci/fact_monitoring_alert.csv
+          test -s outputs/reporting/reporting-ci/fact_assistant_response.csv
+          test -s outputs/reporting/reporting-ci/fact_maintenance_priority.csv
+          test -s outputs/reporting/reporting-ci/bridge_asset_reason.csv
+          test -s outputs/reporting/reporting-ci/bridge_entity_reason.csv
+          test -s outputs/reporting/reporting-ci/bridge_response_citation.csv
+          test -s outputs/reporting/reporting-ci/relationships.json
+          test -s outputs/reporting/reporting-ci/kpi_catalogue.csv
+          test -s outputs/reporting/reporting-ci/metrics.json
+          test -s outputs/reporting/reporting-ci/reporting_manifest.json
+          test -s dashboard/dax/measures.dax
+          test -s dashboard/dax/measure-catalogue.md
+          test -s dashboard/visual-specifications.md
+          test -s dashboard/page-specifications/01_executive_overview.md
+          test -s dashboard/wireframes/01_executive_overview.md
+          test -s reports/reporting/reporting-ci/executive_grid_reliability_brief.md
+          test -s reports/reporting/reporting-ci/grid_operations_dashboard_summary.md
+          test -s reports/reporting/reporting-ci/asset_management_summary.md
+          test -s reports/reporting/reporting-ci/reliability_performance_summary.md
+          test -s reports/reporting/reporting-ci/data_and_model_governance_summary.md
+          test -s reports/reporting/reporting-ci/reporting_model_validation.md
+
       - name: Pytest with coverage
         run: python -m pytest --cov --cov-report=term-missing
 
       - name: Confirm runtime outputs remain untracked
         run: |
-          git status --short --ignored data outputs reports | grep -E '!! data/raw|!! data/interim|!! outputs/forecasting|!! outputs/asset_health|!! outputs/outage_prediction|!! outputs/reliability|!! outputs/monitoring|!! outputs/genai|!! reports/ingestion|!! reports/forecasting|!! reports/asset_health|!! reports/outage_prediction|!! reports/reliability|!! reports/monitoring|!! reports/genai'
+          git status --short --ignored data outputs reports | grep -E '!! data/raw|!! data/interim|!! outputs/forecasting|!! outputs/asset_health|!! outputs/outage_prediction|!! outputs/reliability|!! outputs/monitoring|!! outputs/genai|!! outputs/reporting|!! reports/ingestion|!! reports/forecasting|!! reports/asset_health|!! reports/outage_prediction|!! reports/reliability|!! reports/monitoring|!! reports/genai|!! reports/reporting'
 
       - name: Clean generated runtime outputs
         run: |
@@ -195,3 +237,5 @@ jobs:
           make clean-monitoring-reports
           make clean-assistant
           make clean-assistant-reports
+          make clean-reporting
+          make clean-reporting-reports

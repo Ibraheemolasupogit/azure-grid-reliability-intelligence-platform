@@ -1,0 +1,12 @@
+flowchart TD
+    analytical["Forecasting / Asset Health / Outage Risk"]
+    reliability["Reliability / Monitoring / Assistant"]
+    discovery["Reporting source discovery"]
+    tables["Dimensions, facts, and bridges"]
+    semantic["Semantic model definitions"]
+    kpis["KPI catalogue and DAX measures"]
+    outputs["Power BI-ready outputs and dashboard specifications"]
+
+    analytical --> discovery
+    reliability --> discovery
+    discovery --> tables --> semantic --> kpis --> outputs
