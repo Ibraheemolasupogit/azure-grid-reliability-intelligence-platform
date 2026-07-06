@@ -1,0 +1,17 @@
+flowchart TD
+    hubs["Event Hubs"]
+    validation["Validation / quality controls"]
+    raw["ADLS raw"]
+    quarantine["ADLS quarantine"]
+    interim["ADLS interim"]
+    processed["ADLS processed"]
+    analytics["ADLS analytics"]
+    adx["Azure Data Explorer"]
+    reporting["Power BI/Fabric mapping"]
+
+    hubs --> validation
+    validation --> raw
+    validation --> quarantine
+    raw --> interim --> processed --> analytics
+    analytics --> adx
+    analytics --> reporting

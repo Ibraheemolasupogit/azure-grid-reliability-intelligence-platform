@@ -1,0 +1,11 @@
+flowchart TD
+    data["AML data assets"]
+    jobs["AML jobs<br/>forecasting outage risk"]
+    tracking["MLflow tracking"]
+    registry["Model registry mapping"]
+    batch["Batch endpoint architecture<br/>future"]
+    monitoring["AML monitoring"]
+
+    data --> jobs --> tracking --> registry --> batch
+    jobs --> monitoring
+    registry --> monitoring

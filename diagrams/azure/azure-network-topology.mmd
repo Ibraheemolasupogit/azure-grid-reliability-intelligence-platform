@@ -1,0 +1,21 @@
+flowchart LR
+    vnet["Virtual network<br/>BLUEPRINT_ONLY"]
+    integration["integration subnet"]
+    pe["private_endpoints subnet"]
+    ml["machine_learning subnet"]
+    app["application subnet"]
+    mgmt["management subnet"]
+    dns["Private DNS zones"]
+    nsg["Network security group<br/>deny inbound internet"]
+    services["Private endpoint capable services"]
+
+    vnet --> integration
+    vnet --> pe
+    vnet --> ml
+    vnet --> app
+    vnet --> mgmt
+    nsg -.-> integration
+    nsg -.-> ml
+    nsg -.-> app
+    pe --> services
+    dns -.-> pe

@@ -1,4 +1,4 @@
-.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo predict-outages predict-outages-ci outage-prediction-demo calculate-reliability calculate-reliability-ci reliability-demo monitor-platform monitor-platform-ci monitoring-demo build-assistant-index run-assistant run-assistant-ci evaluate-assistant assistant-demo build-reporting-model build-reporting-model-ci validate-reporting-model reporting-demo clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean-outage-prediction clean-outage-models clean-outage-reports clean-reliability clean-reliability-reports clean-monitoring clean-monitoring-reports clean-assistant clean-assistant-reports clean-reporting clean-reporting-reports clean
+.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo predict-outages predict-outages-ci outage-prediction-demo calculate-reliability calculate-reliability-ci reliability-demo monitor-platform monitor-platform-ci monitoring-demo build-assistant-index run-assistant run-assistant-ci evaluate-assistant assistant-demo build-reporting-model build-reporting-model-ci validate-reporting-model reporting-demo validate-iac lint-bicep build-bicep verify-azure-blueprint azure-what-if clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean-outage-prediction clean-outage-models clean-outage-reports clean-reliability clean-reliability-reports clean-monitoring clean-monitoring-reports clean-assistant clean-assistant-reports clean-reporting clean-reporting-reports clean
 
 install:
 	python -m pip install --upgrade pip
@@ -120,6 +120,20 @@ reporting-demo: assistant-demo build-reporting-model-ci
 	@echo "Reporting datasets written under outputs/reporting/reporting-ci"
 	@echo "Reporting reports written under reports/reporting/reporting-ci"
 	@echo "Dashboard specifications written under dashboard/"
+
+validate-iac:
+	bash scripts/azure/validate_bicep.sh
+
+lint-bicep: validate-iac
+
+build-bicep: validate-iac
+
+verify-azure-blueprint:
+	bash scripts/azure/verify_blueprint.sh
+
+azure-what-if:
+	@if [ -z "$(RESOURCE_GROUP)" ] || [ -z "$(PARAMETERS)" ]; then echo "Set RESOURCE_GROUP and PARAMETERS"; exit 2; fi
+	bash scripts/azure/what_if.sh --resource-group "$(RESOURCE_GROUP)" --parameters "$(PARAMETERS)"
 
 clean-data:
 	rm -f data/raw/smart_meter_events.jsonl data/raw/substation_events.jsonl data/raw/weather_data.csv data/raw/asset_inventory.csv data/raw/maintenance_logs.csv data/raw/outage_history.csv data/raw/_manifest.json

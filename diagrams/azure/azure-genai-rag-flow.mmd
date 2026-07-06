@@ -1,0 +1,13 @@
+flowchart TD
+    sources["Governed evidence sources"]
+    extraction["Extraction and chunking"]
+    lineage["Checksums and citation metadata"]
+    search["Azure AI Search index"]
+    foundry["Azure AI Foundry provider seam"]
+    safety["Critical-infrastructure safety checks"]
+    response["Grounded response with citations"]
+    audit["Prompt/response audit without chain-of-thought"]
+
+    sources --> extraction --> lineage --> search --> foundry --> safety --> response
+    safety --> audit
+    lineage --> response

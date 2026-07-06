@@ -1,0 +1,19 @@
+flowchart TD
+    identity["Entra ID / managed identities"]
+    network["Private network boundary"]
+    data["Data boundary<br/>ADLS / ADX"]
+    ml["ML boundary<br/>AML workspace"]
+    ai["AI boundary<br/>Foundry / Search"]
+    reporting["Reporting boundary<br/>Power BI/Fabric mapping"]
+    governance["Purview and Monitor"]
+
+    identity --> network
+    network --> data
+    network --> ml
+    network --> ai
+    data --> reporting
+    ml --> reporting
+    ai --> reporting
+    governance -.-> data
+    governance -.-> ml
+    governance -.-> ai

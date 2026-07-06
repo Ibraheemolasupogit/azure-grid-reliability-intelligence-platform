@@ -1,0 +1,40 @@
+flowchart TD
+    producers["Synthetic or enterprise data producers"]
+    eventhubs["Azure Event Hubs<br/>BLUEPRINT_ONLY"]
+    processing["Stream processing / Functions / validation<br/>BLUEPRINT_ONLY"]
+    lake["ADLS Gen2 data zones<br/>raw quarantine interim processed analytics"]
+    adx["Azure Data Explorer<br/>time-series analytics"]
+    serving["Synapse / Fabric mapping<br/>analytical serving"]
+    aml["Azure Machine Learning<br/>jobs tracking registry mapping"]
+    outputs["Governed analytical outputs"]
+    search["Azure AI Search<br/>retrieval index"]
+    foundry["Azure AI Foundry<br/>provider seam"]
+    pbi["Power BI / Fabric<br/>semantic reporting mapping"]
+    users["Operational users"]
+    entra["Entra ID and managed identities"]
+    kv["Key Vault"]
+    monitor["Azure Monitor / Log Analytics"]
+    purview["Microsoft Purview"]
+    network["Private networking"]
+
+    producers --> eventhubs --> processing --> lake
+    lake --> adx
+    lake --> serving
+    lake --> aml
+    adx --> outputs
+    serving --> outputs
+    aml --> outputs
+    outputs --> search --> foundry --> pbi --> users
+    outputs --> pbi
+    entra -.-> eventhubs
+    entra -.-> lake
+    entra -.-> aml
+    kv -.-> aml
+    monitor -.-> eventhubs
+    monitor -.-> lake
+    monitor -.-> aml
+    purview -.-> lake
+    purview -.-> outputs
+    network -.-> eventhubs
+    network -.-> lake
+    network -.-> search

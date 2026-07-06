@@ -12,6 +12,6 @@
 | Monitoring | Structured logs and local metrics | Azure Monitor/Application Insights |
 | Reporting | CSV/Parquet analytical outputs | Microsoft Power BI |
 | Governance | Local metadata and documentation | Microsoft Purview |
+| Azure blueprint | Modular Bicep templates and placeholder parameters | Azure Resource Manager |
 
-These mappings are architectural targets. Milestone 1 does not provision Azure resources, validate Azure connectivity, or demonstrate live cloud operation.
-
+These mappings are architectural targets. Milestone 11 represents selected targets in Bicep for static validation and future planning, but it does not provision Azure resources, authenticate to Azure, validate Azure connectivity, or demonstrate live cloud operation.

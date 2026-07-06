@@ -10,6 +10,7 @@ flowchart TD
     monitoring["Operational monitoring and observability<br/>(local)"]
     assistant["Grid Operations Assistant<br/>(local retrieval grounded)"]
     reporting["Power BI-ready reporting outputs<br/>(local semantic CSV/specs)"]
+    blueprint["Azure Bicep blueprint<br/>(not deployed)"]
     operations["Power BI, Azure Monitor, Azure AI Foundry<br/>(planned cloud targets)"]
     users["Operators and decision-makers"]
 
@@ -18,4 +19,4 @@ flowchart TD
     lake --> synapse
     adx --> aml
     synapse --> aml
-    aml --> intelligence --> monitoring --> assistant --> reporting --> operations --> users
+    aml --> intelligence --> monitoring --> assistant --> reporting --> blueprint --> operations --> users

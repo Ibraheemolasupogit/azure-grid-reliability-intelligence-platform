@@ -2,7 +2,7 @@
 
 A local-first, Azure-mapped foundation for grid reliability and energy operations intelligence across synthetic telemetry, data quality, forecasting, asset health, outage risk, operational monitoring, retrieval-grounded assistance, and analytical reporting.
 
-This repository is currently at **Milestone 10: Power BI-Ready Dashboard Outputs and Executive Reporting**. It establishes the engineering structure, shared foundations, deterministic fictional source data generation, governed local ingestion, reproducible local short-term forecasting, transparent asset-health scoring, leakage-safe synthetic outage-risk prediction, historical reliability KPI analytics, local monitoring over runtime manifests and metrics, a deterministic retrieval-grounded assistant over repository evidence, and local Power BI-ready reporting outputs. It does not create `.pbix` files, deploy Power BI or Fabric workspaces, call external models, execute operational actions, deliver live alerts, or deploy Azure resources.
+This repository is currently at **Milestone 11: Azure Reference Architecture and Deployment Blueprint**. It establishes the engineering structure, shared foundations, deterministic fictional source data generation, governed local ingestion, reproducible local short-term forecasting, transparent asset-health scoring, leakage-safe synthetic outage-risk prediction, historical reliability KPI analytics, local monitoring over runtime manifests and metrics, a deterministic retrieval-grounded assistant over repository evidence, local Power BI-ready reporting outputs, and a deployment-free Azure Bicep blueprint. It does not create `.pbix` files, deploy Power BI or Fabric workspaces, authenticate to Azure, execute operational actions, deliver live alerts, or deploy Azure resources.
 
 ## Problem Statement
 
@@ -38,6 +38,7 @@ flowchart TD
     monitoring["Operational monitoring and observability<br/>(local)"]
     assistant["Grid Operations Assistant<br/>(local retrieval grounded)"]
     reporting["Power BI-ready semantic outputs<br/>(local CSV/specs)"]
+    blueprint["Azure Bicep deployment blueprint<br/>(not deployed)"]
     operations["Power BI, Azure Monitor, Azure AI Foundry<br/>(planned cloud targets)"]
     users["Operators and decision-makers"]
 
@@ -46,14 +47,14 @@ flowchart TD
     lake --> synapse
     adx --> aml
     synapse --> aml
-    aml --> intelligence --> monitoring --> assistant --> reporting --> operations --> users
+    aml --> intelligence --> monitoring --> assistant --> reporting --> blueprint --> operations --> users
 ```
 
 Local simulations are intended to demonstrate architecture, testing, reproducibility, and engineering patterns. They are not evidence of live Azure deployment.
 
 ## Local-First and Azure Deployment
 
-Milestones 1 through 10 run locally and require no Azure credentials. Future milestones may document deployment guidance for Azure services. Any live Azure or Fabric deployment would require a subscription, identity configuration, RBAC, networking, service provisioning, workspace configuration, and operational monitoring outside the current milestone.
+Milestones 1 through 11 run locally and require no Azure credentials. Milestone 11 adds Bicep templates, environment parameter files, scripts, CI checks, diagrams, threat modelling, ADRs, and Azure architecture documentation as a blueprint only. Any live Azure or Fabric deployment would require a subscription, identity configuration, RBAC, networking, service provisioning, workspace configuration, approvals, and operational monitoring outside the current milestone.
 
 ## Azure Service Mapping
 
@@ -69,6 +70,7 @@ Milestones 1 through 10 run locally and require no Azure credentials. Future mil
 | Monitoring | Local observability CSV/JSON records, alert evaluations, metrics, manifests, and reports | Azure Monitor, Application Insights, Log Analytics, Azure Machine Learning monitoring, Microsoft Purview, and Power BI |
 | Reporting | Local dimensions, facts, bridges, relationships, KPI catalogue, DAX text, dashboard specifications, and executive reports | Microsoft Power BI and Microsoft Fabric |
 | Governance | Local metadata and documentation | Microsoft Purview |
+| Azure blueprint | Modular Bicep templates, placeholder parameters, safe validation scripts, ADRs, security controls, and diagrams | Azure Resource Manager and Azure platform services |
 
 ## Planned Datasets
 
@@ -267,6 +269,19 @@ Reporting discovers governed outputs from forecasting, asset health, outage pred
 
 Outputs are written under `outputs/reporting/<run_id>/`, reports under `reports/reporting/<run_id>/`, and design assets under `dashboard/`. These are Power BI-ready local artifacts only; no `.pbix`, `.pbit`, Power BI workspace, Fabric workspace, gateway, scheduled refresh, app, REST API call, or Azure deployment is created.
 
+## Azure Reference Architecture Blueprint
+
+Validate the deployment-free Azure blueprint:
+
+```bash
+make verify-azure-blueprint
+make validate-iac
+```
+
+The blueprint lives under `infra/bicep/` and maps the local platform to Azure Event Hubs, ADLS Gen2, Azure Data Explorer, Azure Machine Learning, Azure AI Foundry, Azure AI Search, Azure Monitor, Log Analytics, Application Insights, Microsoft Purview, Power BI, and Microsoft Fabric patterns. Documentation lives under `docs/azure/`, security materials under `docs/security/`, decisions under `docs/architecture/decisions/`, and diagrams under `diagrams/azure/`.
+
+`validate-iac` runs Azure CLI Bicep build/lint only when Azure CLI is already available. No Azure login, what-if, deployment, subscription selection, or resource creation is performed by default.
+
 ## Planned Analytical and ML Use Cases
 
 - Short-term electricity-demand forecasting.
@@ -335,7 +350,7 @@ Implemented reliability measures include SAIDI, SAIFI, CAIDI, ASAI, ASUI, outage
 8. Operational monitoring and observability.
 9. GenAI Grid Operations Assistant.
 10. Power BI-ready dashboard outputs and executive reporting.
-11. Azure deployment guidance.
+11. Azure reference architecture and deployment blueprint.
 
 ## Local Setup
 
@@ -354,7 +369,7 @@ The foundation uses Ruff, mypy, pytest, coverage, typed settings, deterministic 
 
 ## Limitations and Current Status
 
-Only Milestones 1 through 10 are implemented. The repository contains architecture scaffolding, shared foundation utilities, synthetic source data generation, governed local ingestion, local demand forecasting, local transparent asset-health analytics, local synthetic outage-risk prediction, local reliability KPI analytics, local operational observability, a local retrieval-grounded assistant with citations, and local Power BI-ready reporting outputs with semantic documentation, dashboard specifications, and deterministic executive reports. Asset-failure prediction, anomaly-detection models, deployed dashboards, live external-model integrations, live alert delivery, and live Azure or Fabric infrastructure remain future work. Generated runtime datasets, model artifacts, reports, monitoring outputs, assistant outputs, reporting outputs, and Azure deployment artefacts are intentionally excluded from version control.
+Only Milestones 1 through 11 are implemented. The repository contains architecture scaffolding, shared foundation utilities, synthetic source data generation, governed local ingestion, local demand forecasting, local transparent asset-health analytics, local synthetic outage-risk prediction, local reliability KPI analytics, local operational observability, a local retrieval-grounded assistant with citations, local Power BI-ready reporting outputs, and a blueprint-only Azure reference architecture with Bicep templates and validation checks. Asset-failure prediction, anomaly-detection models, deployed dashboards, live external-model integrations, live alert delivery, and live Azure or Fabric infrastructure remain future work. Generated runtime datasets, model artifacts, reports, monitoring outputs, assistant outputs, reporting outputs, and Azure deployment artefacts are intentionally excluded from version control.
 
 ## Licence
 

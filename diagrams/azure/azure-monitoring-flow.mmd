@@ -1,0 +1,10 @@
+flowchart LR
+    resources["Azure resources"]
+    diagnostics["Diagnostic settings"]
+    logs["Log Analytics"]
+    appi["Application Insights"]
+    alerts["Alert rules<br/>placeholder"]
+    workbooks["Workbooks / Power BI review"]
+
+    resources --> diagnostics --> logs --> alerts --> workbooks
+    resources --> appi --> logs

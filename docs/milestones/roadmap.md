@@ -74,6 +74,10 @@ Implemented governed reporting source discovery, deterministic key generation, d
 
 Power BI Desktop files, Power BI/Fabric workspace deployment, REST API calls, live refresh, embedded dashboards, and Azure deployment remain out of scope.
 
-## Milestone 11: Azure Deployment Guidance
+## Milestone 11: Azure Reference Architecture and Deployment Blueprint
 
-Planned reference architecture, deployment guidance, security model, and Azure service configuration. No Azure deployment is included in Milestones 1 through 10.
+Status: implemented as a deployment-free Azure blueprint only.
+
+Implemented modular Bicep templates, placeholder environment parameter files, safe validation and future deployment scripts, Azure architecture documentation, service mapping, environment strategy, identity, networking, data platform, Azure ML, AI Foundry/Search, monitoring, Purview, Power BI/Fabric mapping, security control matrix, STRIDE threat model, ADRs, resilience and DR guidance, cost controls, deployment sequencing, operational readiness checklist, diagrams, Makefile targets, CI validation, and unit tests.
+
+No Azure authentication, what-if, deployment, service principal creation, real resource IDs, Power BI workspace deployment, model endpoint deployment, live alert delivery, or production data migration is performed.

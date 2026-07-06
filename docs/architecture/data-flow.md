@@ -1,6 +1,6 @@
 # Data Flow
 
-Milestones 3 through 10 implement local governed movement from raw synthetic source files into interim and quarantine zones, then forecasting, asset-health analytics, outage prediction, reliability KPI analytics, operational monitoring, retrieval-grounded assistant responses, and Power BI-ready reporting outputs over governed runtime evidence.
+Milestones 3 through 11 implement local governed movement from raw synthetic source files into interim and quarantine zones, then forecasting, asset-health analytics, outage prediction, reliability KPI analytics, operational monitoring, retrieval-grounded assistant responses, Power BI-ready reporting outputs, and a deployment-free Azure reference blueprint over governed runtime evidence.
 
 ```mermaid
 flowchart LR
@@ -19,9 +19,10 @@ flowchart LR
     monitoring["Local operational monitoring<br/>outputs/monitoring"]
     assistant["Local grid operations assistant<br/>outputs/genai"]
     reporting["Power BI-ready outputs and reports<br/>(local artifacts)"]
+    azure["Azure Bicep blueprint<br/>infra/bicep"]
 
     inputs --> manifest --> ingestion --> validation
-    validation --> interim --> forecasting --> analytics --> monitoring --> assistant --> reporting
+    validation --> interim --> forecasting --> analytics --> monitoring --> assistant --> reporting --> azure
     interim --> assethealth --> monitoring
     interim --> outage --> monitoring
     interim --> reliability --> monitoring
@@ -34,6 +35,7 @@ flowchart LR
     monitoring --> reports
     assistant --> reports
     reporting --> reports
+    azure --> reports
 ```
 
 The matching Azure pattern is Event Hubs, Azure Functions or Stream Analytics, Data Lake Storage Gen2 raw/quarantine/silver zones, Azure Monitor or Application Insights, Microsoft Purview, Azure Data Explorer or Synapse, Azure Machine Learning, and Power BI. These are mappings only; no Azure resources are deployed.

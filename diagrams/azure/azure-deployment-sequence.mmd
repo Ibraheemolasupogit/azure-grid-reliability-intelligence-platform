@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant Review as Architecture Review
+    participant Net as Network
+    participant Sec as Monitor/KeyVault
+    participant Data as Storage/Eventing/ADX
+    participant ML as Azure ML
+    participant AI as Foundry/Search
+    participant Gov as Purview/Power BI
+    participant Val as Validation
+
+    Review->>Net: approve parameters
+    Net->>Sec: deploy baseline controls
+    Sec->>Data: deploy data platform
+    Data->>ML: deploy ML blueprint
+    ML->>AI: deploy AI blueprint
+    AI->>Gov: configure governance/reporting mapping
+    Gov->>Val: run smoke tests and readiness gates

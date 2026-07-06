@@ -27,12 +27,13 @@ The platform is designed to demonstrate engineering patterns locally before clou
 - Local retrieval-grounded grid operations assistant over approved repository evidence.
 - Assistant responses, citations, retrieval records, prompt-audit metadata, safety records, evaluation outputs, metrics, manifests, and reports.
 - Local Power BI-ready reporting dimensions, facts, bridge tables, relationships, KPI catalogue, DAX text definitions, dashboard specifications, wireframes, metrics, manifests, and executive reports.
+- Deployment-free Azure Bicep blueprint, placeholder parameters, architecture diagrams, ADRs, threat model, and static validation tests.
 - Tests and static quality checks.
 
 ## What Is Planned Locally
 
 - Local analytical tables beyond forecasting, asset health, outage prediction, and reliability KPIs.
-- Future deployment guidance beyond local reporting artifacts.
+- Future live deployment execution and environment-specific integration.
 
 ## What Requires Azure
 
@@ -44,4 +45,4 @@ The platform is designed to demonstrate engineering patterns locally before clou
 - Online model endpoints, model registry deployment, and production retraining orchestration.
 - Identity, networking, RBAC, private endpoints, and production-grade observability.
 
-Local simulations demonstrate architecture and delivery patterns, not live Azure deployment. Milestone 8 monitoring outputs map conceptually to Azure Monitor, Application Insights, Log Analytics, Azure Machine Learning monitoring, Microsoft Purview, and Power BI. Milestone 9 assistant outputs map conceptually to Azure AI Foundry, Azure AI Search, Azure Monitor/Application Insights, and Microsoft Purview. Milestone 10 reporting outputs map conceptually to Power BI semantic models, Microsoft Fabric, Azure Synapse Analytics, Azure Data Explorer, Microsoft Purview, and Azure Monitor. They remain local files.
+Local simulations demonstrate architecture and delivery patterns, not live Azure deployment. Milestone 8 monitoring outputs map conceptually to Azure Monitor, Application Insights, Log Analytics, Azure Machine Learning monitoring, Microsoft Purview, and Power BI. Milestone 9 assistant outputs map conceptually to Azure AI Foundry, Azure AI Search, Azure Monitor/Application Insights, and Microsoft Purview. Milestone 10 reporting outputs map conceptually to Power BI semantic models, Microsoft Fabric, Azure Synapse Analytics, Azure Data Explorer, Microsoft Purview, and Azure Monitor. Milestone 11 represents these targets in Bicep and Azure documentation. They remain blueprint-only files.
