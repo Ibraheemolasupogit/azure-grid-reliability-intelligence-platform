@@ -36,4 +36,23 @@ jobs:
 
       - name: Confirm no deployment command is invoked
         run: |
-          ! grep -R "az deployment group create" .github/workflows
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+
+          tokens = ["az", "deployment", "group", "create"]
+          pattern = re.compile(r"\b" + r"\s+".join(tokens) + r"\b")
+          matches = []
+
+          for path in Path(".github/workflows").glob("*.yml"):
+              text = path.read_text(encoding="utf-8")
+              if pattern.search(text):
+                  matches.append(str(path))
+
+          if matches:
+              print("Deployment command found in workflow files:")
+              for match in matches:
+                  print(f"- {match}")
+              sys.exit(1)
+          PY
