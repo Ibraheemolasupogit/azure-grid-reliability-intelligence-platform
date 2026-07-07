@@ -21,6 +21,7 @@ env/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
+.hypothesis/
 .coverage
 coverage.xml
 htmlcov/
@@ -67,3 +68,6 @@ azureProfile.json
 .terraform/
 terraform.tfstate*
 *.tfvars
+infra/bicep/**/*.json
+infra/bicep/**/*.zip
+infra/bicep/**/*.tar.gz

@@ -40,9 +40,9 @@ The platform is designed to demonstrate engineering patterns locally before clou
 - Event Hubs namespaces and event streams.
 - Data Lake Storage Gen2 accounts and containers.
 - Synapse, Azure Data Explorer, Azure Machine Learning, Azure Monitor, Power BI, Purview, and Azure AI Foundry resources.
-- Live Azure Monitor ingestion, Application Insights SDK connectivity, Log Analytics workspaces, and alert action groups.
+- Azure Monitor ingestion, Application Insights SDK connectivity, Log Analytics workspaces, and alert action groups.
 - Azure AI Foundry, Azure OpenAI, Azure AI Search, and external model hosting.
 - Online model endpoints, model registry deployment, and production retraining orchestration.
-- Identity, networking, RBAC, private endpoints, and production-grade observability.
+- Identity, networking, RBAC, private endpoints, and production-oriented observability.
 
-Local simulations demonstrate architecture and delivery patterns, not live Azure deployment. Milestone 8 monitoring outputs map conceptually to Azure Monitor, Application Insights, Log Analytics, Azure Machine Learning monitoring, Microsoft Purview, and Power BI. Milestone 9 assistant outputs map conceptually to Azure AI Foundry, Azure AI Search, Azure Monitor/Application Insights, and Microsoft Purview. Milestone 10 reporting outputs map conceptually to Power BI semantic models, Microsoft Fabric, Azure Synapse Analytics, Azure Data Explorer, Microsoft Purview, and Azure Monitor. Milestone 11 represents these targets in Bicep and Azure documentation. They remain blueprint-only files.
+Local simulations demonstrate architecture and delivery patterns, not Azure deployment. Milestone 8 monitoring outputs map conceptually to Azure Monitor, Application Insights, Log Analytics, Azure Machine Learning monitoring, Microsoft Purview, and Power BI. Milestone 9 assistant outputs map conceptually to Azure AI Foundry, Azure AI Search, Azure Monitor/Application Insights, and Microsoft Purview. Milestone 10 reporting outputs map conceptually to Power BI semantic models, Microsoft Fabric, Azure Synapse Analytics, Azure Data Explorer, Microsoft Purview, and Azure Monitor. Milestone 11 represents these targets in Bicep and Azure documentation. They remain blueprint-only files.

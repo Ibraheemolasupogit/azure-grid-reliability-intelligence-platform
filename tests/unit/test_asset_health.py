@@ -134,10 +134,13 @@ def test_pipeline_writes_scores_metrics_manifest_and_reports(tmp_path: Path) -> 
     assert metrics["excluded_assets"] == 6
 
 
-def test_cli_success_filter_and_missing_input_failure(tmp_path: Path) -> None:
+def test_cli_success_filter_and_missing_input_failure(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     workspace = _workspace(tmp_path)
     _generate_and_ingest(workspace)
     config_path = _write_asset_health_config(workspace)
+    monkeypatch.chdir(workspace)
     assert main(["--config", str(config_path), "--run-id", "cli-health"]) == 0
     assert (
         main(["--config", str(config_path), "--asset-type", "feeder", "--run-id", "feeders"]) == 0

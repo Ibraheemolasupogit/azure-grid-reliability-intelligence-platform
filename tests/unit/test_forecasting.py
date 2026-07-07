@@ -159,10 +159,13 @@ def test_pipeline_writes_outputs_reports_and_metadata(tmp_path: Path) -> None:
     assert not any(str(workspace) in value for value in json.dumps(metadata).split())
 
 
-def test_cli_success_and_insufficient_history_failure(tmp_path: Path) -> None:
+def test_cli_success_and_insufficient_history_failure(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     workspace = _workspace(tmp_path)
     _generate_and_ingest(workspace)
     config_path = _write_forecasting_config(workspace)
+    monkeypatch.chdir(workspace)
     assert main(["--config", str(config_path), "--run-id", "cli-forecast"]) == 0
 
     bad_config = _write_forecasting_config(workspace, minimum_history_intervals=10)

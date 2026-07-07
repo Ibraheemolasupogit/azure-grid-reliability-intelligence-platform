@@ -56,7 +56,7 @@ Status: implemented for local monitoring and observability only.
 
 Implemented deterministic local component discovery, pipeline-health checks, freshness and volume checks, ingestion quality trends, schema drift records, distribution drift records, forecast monitoring, outage-prediction monitoring, asset-health and reliability analytical monitoring, alert-rule evaluation, alert suppression, metrics, manifests, CSV outputs, Markdown reports, Makefile targets, and CI checks.
 
-Live Azure Monitor ingestion, Application Insights SDK connectivity, Log Analytics workspaces, external alert delivery, dashboards, automated retraining, automated remediation, GenAI, Spark, and Azure deployment remain out of scope.
+Azure Monitor ingestion, Application Insights SDK connectivity, Log Analytics workspaces, external alert delivery, dashboards, automated retraining, automated remediation, GenAI, Spark, and Azure deployment remain out of scope.
 
 ## Milestone 9: GenAI Grid Operations Assistant
 
@@ -81,3 +81,11 @@ Status: implemented as a deployment-free Azure blueprint only.
 Implemented modular Bicep templates, placeholder environment parameter files, safe validation and future deployment scripts, Azure architecture documentation, service mapping, environment strategy, identity, networking, data platform, Azure ML, AI Foundry/Search, monitoring, Purview, Power BI/Fabric mapping, security control matrix, STRIDE threat model, ADRs, resilience and DR guidance, cost controls, deployment sequencing, operational readiness checklist, diagrams, Makefile targets, CI validation, and unit tests.
 
 No Azure authentication, what-if, deployment, service principal creation, real resource IDs, Power BI workspace deployment, model endpoint deployment, live alert delivery, or production data migration is performed.
+
+## Milestone 12: Portfolio Polish, Final QA, and Interview-Ready Documentation
+
+Status: implemented for final repository polish only.
+
+Implemented a concise portfolio-ready README, reviewer and interview documentation, documentation indexes, final deliverables summary, limitation and assumption notes, repository-polish verification script, unit test coverage for repository QA, Makefile portfolio check target, terminology cleanup, link checks, runtime artifact hygiene checks, and final validation guidance.
+
+No new data generation logic, ingestion logic, forecasting model, asset-health method, outage-prediction model, reliability KPI formula, monitoring rule, assistant capability, reporting semantic table, Azure service, Azure deployment, Power BI deployment, model endpoint deployment, or external API integration is performed.

@@ -1,358 +1,74 @@
 # Azure Grid Reliability Intelligence Platform
 
-A local-first, Azure-mapped foundation for grid reliability and energy operations intelligence across synthetic telemetry, data quality, forecasting, asset health, outage risk, operational monitoring, retrieval-grounded assistance, and analytical reporting.
+Grid Reliability Intelligence Platform is a local-first, Azure-mapped portfolio project for energy and critical infrastructure analytics. It demonstrates how synthetic grid telemetry can move through governed ingestion, validation, forecasting, asset-health analytics, outage-risk modelling, reliability KPI reporting, operational monitoring, retrieval-grounded assistance, Power BI-ready semantic outputs, and an Azure blueprint without using real grid data or deploying cloud resources.
 
-This repository is currently at **Milestone 11: Azure Reference Architecture and Deployment Blueprint**. It establishes the engineering structure, shared foundations, deterministic fictional source data generation, governed local ingestion, reproducible local short-term forecasting, transparent asset-health scoring, leakage-safe synthetic outage-risk prediction, historical reliability KPI analytics, local monitoring over runtime manifests and metrics, a deterministic retrieval-grounded assistant over repository evidence, local Power BI-ready reporting outputs, and a deployment-free Azure Bicep blueprint. It does not create `.pbix` files, deploy Power BI or Fabric workspaces, authenticate to Azure, execute operational actions, deliver live alerts, or deploy Azure resources.
+The repository is complete through **Milestone 12: Portfolio Polish, Final QA, and Interview-Ready Documentation**.
 
-## Problem Statement
+## Business Problem
 
-Electricity networks need reliable ways to combine smart meter, substation, weather, asset, maintenance, and outage data into operational intelligence. The platform is designed to show how those workflows can be developed locally with clear mappings to Azure services used in critical-infrastructure analytics.
+Electricity operators need reliable decision support across smart meter, substation, weather, asset, maintenance, and outage evidence. This project shows how those workflows can be engineered with reproducible local pipelines, governed evidence, transparent limitations, and a clear migration path to Azure services used in critical-infrastructure analytics.
 
-## Target Capabilities
+## Architecture Summary
 
-- Synthetic smart meter and substation telemetry.
-- Batch and event-driven ingestion.
-- Data validation and quality controls.
-- Short-term demand and load forecasting.
-- Asset health condition scoring.
-- Outage prediction.
-- Anomaly detection.
-- Reliability KPI calculation and executive reporting.
-- Operational monitoring.
-- GenAI-assisted incident and maintenance analysis.
-- Power BI-ready analytical outputs.
-- Azure reference architecture and deployment guidance.
+The local implementation runs entirely on Python, Make, checked-in configuration, deterministic synthetic data, local files, Markdown evidence, and automated tests. The target Azure architecture is documented as a blueprint using Bicep, diagrams, ADRs, and service mappings for Event Hubs, ADLS Gen2, Azure Data Explorer, Azure Machine Learning, Azure AI Foundry, Azure AI Search, Azure Monitor, Microsoft Purview, Power BI, and Microsoft Fabric.
 
-## Architecture
+No Azure resources are deployed. No Power BI workspace is deployed. No real grid, customer, address, coordinate, asset, outage, maintenance, or operational data is used.
 
 ```mermaid
-flowchart TD
-    sources["Smart meters, substations, weather, maintenance systems"]
-    event_hubs["Azure Event Hubs<br/>(planned cloud target)"]
-    stream["Stream processing and data-quality controls<br/>(planned)"]
-    lake["Azure Data Lake Storage Gen2<br/>(planned cloud target)"]
-    adx["Azure Data Explorer<br/>(planned)"]
-    synapse["Azure Synapse Analytics<br/>(planned)"]
-    aml["Azure Machine Learning<br/>(planned)"]
-    intelligence["Forecasting, asset-health, outage-risk, reliability analytics<br/>(local)"]
-    monitoring["Operational monitoring and observability<br/>(local)"]
-    assistant["Grid Operations Assistant<br/>(local retrieval grounded)"]
-    reporting["Power BI-ready semantic outputs<br/>(local CSV/specs)"]
-    blueprint["Azure Bicep deployment blueprint<br/>(not deployed)"]
-    operations["Power BI, Azure Monitor, Azure AI Foundry<br/>(planned cloud targets)"]
-    users["Operators and decision-makers"]
-
-    sources --> event_hubs --> stream --> lake
-    lake --> adx
-    lake --> synapse
-    adx --> aml
-    synapse --> aml
-    aml --> intelligence --> monitoring --> assistant --> reporting --> blueprint --> operations --> users
+flowchart LR
+    synthetic["Synthetic data"] --> ingestion["Governed ingestion"]
+    ingestion --> interim["Validated interim data"]
+    interim --> forecasting["Demand forecasting"]
+    interim --> assets["Asset health"]
+    interim --> outages["Outage risk"]
+    interim --> reliability["Reliability KPIs"]
+    forecasting --> monitoring["Monitoring"]
+    assets --> monitoring
+    outages --> monitoring
+    reliability --> monitoring
+    monitoring --> assistant["Grounded assistant"]
+    assistant --> reporting["Power BI-ready outputs"]
+    reporting --> blueprint["Azure blueprint"]
 ```
 
-Local simulations are intended to demonstrate architecture, testing, reproducibility, and engineering patterns. They are not evidence of live Azure deployment.
+See [docs/portfolio/architecture-walkthrough.md](docs/portfolio/architecture-walkthrough.md) and [diagrams/README.md](diagrams/README.md).
 
-## Local-First and Azure Deployment
-
-Milestones 1 through 11 run locally and require no Azure credentials. Milestone 11 adds Bicep templates, environment parameter files, scripts, CI checks, diagrams, threat modelling, ADRs, and Azure architecture documentation as a blueprint only. Any live Azure or Fabric deployment would require a subscription, identity configuration, RBAC, networking, service provisioning, workspace configuration, approvals, and operational monitoring outside the current milestone.
-
-## Azure Service Mapping
-
-| Platform capability | Local-first implementation | Azure target |
-| --- | --- | --- |
-| Meter ingestion | JSONL/event reader and Python batch pipeline | Azure Event Hubs |
-| Raw storage | Local filesystem partitioning | Azure Data Lake Storage Gen2 |
-| Stream processing | Finite local micro-batch abstraction | Azure Stream Analytics or Azure Functions |
-| Analytical warehouse | Local analytical tables | Azure Synapse Analytics |
-| Time-series analytics | Local Python/columnar analysis | Azure Data Explorer |
-| ML lifecycle | Local forecasting, asset-health, outage-risk, and reliability batch pipelines | Azure Machine Learning |
-| GenAI operations assistant | Deterministic local retrieval, lexical index, citations, safety checks, and provider-neutral interface | Azure AI Foundry and Azure AI Search |
-| Monitoring | Local observability CSV/JSON records, alert evaluations, metrics, manifests, and reports | Azure Monitor, Application Insights, Log Analytics, Azure Machine Learning monitoring, Microsoft Purview, and Power BI |
-| Reporting | Local dimensions, facts, bridges, relationships, KPI catalogue, DAX text, dashboard specifications, and executive reports | Microsoft Power BI and Microsoft Fabric |
-| Governance | Local metadata and documentation | Microsoft Purview |
-| Azure blueprint | Modular Bicep templates, placeholder parameters, safe validation scripts, ADRs, security controls, and diagrams | Azure Resource Manager and Azure platform services |
-
-## Planned Datasets
-
-- `smart_meter_events.jsonl`
-- `substation_events.jsonl`
-- `weather_data.csv`
-- `asset_inventory.csv`
-- `maintenance_logs.csv`
-- `outage_history.csv`
-
-Full generated runtime datasets are written to `data/raw/` and ignored by Git. Small deterministic fixtures live under `tests/fixtures/synthetic_data/` for tests and documentation.
-
-## Synthetic Data Generation
-
-Generate the standard local dataset profile:
-
-```bash
-python3 -m grid_reliability.data_generation.pipeline --config configs/synthetic_data.yaml
-```
-
-Generate the smaller CI/test profile:
-
-```bash
-python3 -m grid_reliability.data_generation.pipeline --config configs/synthetic_data_ci.yaml
-```
-
-The generator supports implemented overrides for `--output-root`, `--seed`, `--start`, `--end`, and `--profile`. With the same seed and configuration, dataset contents are reproducible. The `_manifest.json` file includes a generation timestamp, so the manifest itself is not byte-for-byte deterministic across runs.
-
-Example configuration:
-
-```yaml
-random_seed: 20260201
-start_timestamp: "2026-01-01T00:00:00"
-end_timestamp: "2026-01-01T06:00:00"
-meter_interval_minutes: 60
-number_of_regions: 2
-substations_per_region: 1
-feeders_per_substation: 1
-meters_per_feeder: 3
-output_root: data/raw
-schema_version: "2.0.0"
-```
-
-All identifiers, locations, manufacturers, maintenance notes, and incidents are fictional. The data contains no real customers, addresses, postcodes, coordinates, utility assets, or operational systems.
-
-## Governed Ingestion and Validation
-
-Run local ingestion against generated sources:
-
-```bash
-python3 -m grid_reliability.ingestion.pipeline --config configs/ingestion.yaml
-```
-
-Run the small CI profile end to end:
-
-```bash
-python3 -m grid_reliability.data_generation.pipeline --config configs/synthetic_data_ci.yaml
-python3 -m grid_reliability.ingestion.pipeline --config configs/ingestion_ci.yaml
-```
-
-The ingestion layer verifies `_manifest.json`, checks file sizes, SHA-256 checksums and record counts, parses CSV and JSON Lines, validates contracts and relationships, writes valid JSONL outputs to `data/interim/`, writes invalid records to `data/quarantine/<run_id>/`, and writes reports to `reports/ingestion/<run_id>/`.
-
-Run statuses are `PASSED`, `PASSED_WITH_WARNINGS`, `FAILED_QUALITY_THRESHOLD`, `FAILED_MANIFEST`, `FAILED_CONFIGURATION`, and `FAILED_PROCESSING`. Failed statuses return a non-zero CLI exit code.
-
-## Electricity Demand Forecasting
-
-Run local forecasting against validated interim data:
-
-```bash
-python3 -m grid_reliability.forecasting.pipeline --config configs/forecasting.yaml
-```
-
-Run the small profile end to end:
-
-```bash
-python3 -m grid_reliability.data_generation.pipeline --config configs/synthetic_data_ci.yaml
-python3 -m grid_reliability.ingestion.pipeline --config configs/ingestion_ci.yaml
-python3 -m grid_reliability.forecasting.pipeline --config configs/forecasting_ci.yaml
-```
-
-Forecasting supports `active_energy_kwh` from smart meter events and `load_mw` from substation events at grid-region, substation, or feeder grain. The CI profile uses one-interval-ahead grid-region forecasts because it contains only six hourly timestamps.
-
-Outputs are written under `outputs/forecasting/<run_id>/`, model metadata under `outputs/models/forecasting/<run_id>/`, and reports under `reports/forecasting/<run_id>/`. Generated CSV outputs are Power BI-ready, but no Power BI dashboard is created.
-
-## Asset Health Analytics
-
-Run local asset-health scoring against validated interim data:
-
-```bash
-python3 -m grid_reliability.asset_health.pipeline --config configs/asset_health.yaml
-```
-
-Run the small profile end to end:
-
-```bash
-python3 -m grid_reliability.data_generation.pipeline --config configs/synthetic_data_ci.yaml
-python3 -m grid_reliability.ingestion.pipeline --config configs/ingestion_ci.yaml
-python3 -m grid_reliability.asset_health.pipeline --config configs/asset_health_ci.yaml
-```
-
-Asset health supports `primary_substation`, `secondary_substation`, `transformer`, `circuit_breaker`, `feeder`, `switchgear`, and `protection_relay`. Smart meters are excluded by default. The score convention is `0` poorest condition and `100` strongest condition.
-
-Outputs are written under `outputs/asset_health/<run_id>/` and reports under `reports/asset_health/<run_id>/`. The implementation separates condition score, criticality tier, operational evidence, and maintenance review priority. It is not a failure prediction or outage prediction model.
-
-## Outage Prediction
-
-Run local outage-risk prediction against validated interim data:
-
-```bash
-python3 -m grid_reliability.outage_prediction.pipeline --config configs/outage_prediction.yaml
-```
-
-Run the small profile end to end:
-
-```bash
-python3 -m grid_reliability.data_generation.pipeline --config configs/synthetic_data_ci.yaml
-python3 -m grid_reliability.ingestion.pipeline --config configs/ingestion_ci.yaml
-python3 -m grid_reliability.outage_prediction.pipeline --config configs/outage_prediction_ci.yaml
-```
-
-The CI profile predicts feeder-level unplanned outage risk within the next configured interval. Labels are leakage-safe: an outage is positive only when it starts after the observation timestamp and on or before the prediction horizon boundary. Planned outages are excluded.
-
-Outputs are written under `outputs/outage_prediction/<run_id>/`, model metadata under `outputs/models/outage_prediction/<run_id>/`, and reports under `reports/outage_prediction/<run_id>/`. CSV outputs are Power BI-ready, but no Power BI dashboard is created.
-
-## Reliability KPI Analytics
-
-Run local reliability analytics against validated interim data:
-
-```bash
-python3 -m grid_reliability.reliability.pipeline --config configs/reliability.yaml
-```
-
-Run the small profile end to end:
-
-```bash
-python3 -m grid_reliability.data_generation.pipeline --config configs/synthetic_data_ci.yaml
-python3 -m grid_reliability.ingestion.pipeline --config configs/ingestion_ci.yaml
-python3 -m grid_reliability.reliability.pipeline --config configs/reliability_ci.yaml
-```
-
-Reliability analytics calculate SAIFI, SAIDI, CAIDI, ASAI, ASUI, event-level outage measures, internal trends, internal peer benchmarks, composite reliability scores, bands, and reason codes for grid regions, substations, and feeders. Population denominators use observed unique smart-meter IDs from validated interim events and are documented as observed-meter counts, not certified customer counts.
-
-Outputs are written under `outputs/reliability/<run_id>/` and reports under `reports/reliability/<run_id>/`. Outputs are Power BI-ready CSV and JSON artifacts, but no Power BI project file or dashboard is created.
-
-## Operational Monitoring
-
-Run local monitoring against existing runtime artifacts:
-
-```bash
-python3 -m grid_reliability.monitoring.pipeline --config configs/monitoring.yaml
-```
-
-Run the small profile end to end:
-
-```bash
-make monitoring-demo
-```
-
-Monitoring discovers local component manifests and metrics for data generation, ingestion, forecasting, asset health, outage prediction, and reliability. It writes pipeline-health records, freshness and volume checks, quality-trend checks, schema and distribution drift records, model-health checks, analytical-health checks, deterministic alert evaluations, a monitoring manifest, metrics JSON, and Markdown reports.
-
-Outputs are written under `outputs/monitoring/` and reports under `reports/monitoring/<run_id>/`. Alert records are local review artifacts only; no email, SMS, Teams, webhook, PagerDuty, Azure Monitor action group, Power BI dashboard, or Azure resource is created.
-
-## Grid Operations Assistant
-
-Run the local assistant against existing governed evidence:
-
-```bash
-python3 -m grid_reliability.genai.pipeline --config configs/genai_assistant.yaml
-```
-
-Run the small profile end to end:
-
-```bash
-make assistant-demo
-```
-
-The assistant discovers approved repository-local reports, metrics, manifests, outputs, documentation, and contracts; extracts and chunks evidence; builds a deterministic lexical index; classifies questions; retrieves evidence; applies grounding and safety checks; generates template-based responses; and persists citations, retrieval records, prompt-audit metadata, safety evaluations, metrics, a manifest, evaluation results, and reports.
-
-Outputs are written under `outputs/genai/` and reports under `reports/genai/<run_id>/`. The assistant cannot execute operations, suppress alerts, dispatch crews, call Azure AI Foundry, call Azure OpenAI, use Azure AI Search, or use external models.
-
-## Power BI-Ready Reporting
-
-Build local reporting semantic outputs against existing governed runtime artifacts:
-
-```bash
-python3 -m grid_reliability.reporting.pipeline --config configs/reporting.yaml
-```
-
-Run the small profile end to end:
-
-```bash
-make reporting-demo
-```
-
-Reporting discovers governed outputs from forecasting, asset health, outage prediction, reliability, monitoring, and the assistant; standardises keys; creates dimensions, facts, and bridge tables; validates relationships; writes a KPI catalogue, DAX text definitions, metrics, manifest, executive reports, dashboard page specifications, and wireframes.
-
-Outputs are written under `outputs/reporting/<run_id>/`, reports under `reports/reporting/<run_id>/`, and design assets under `dashboard/`. These are Power BI-ready local artifacts only; no `.pbix`, `.pbit`, Power BI workspace, Fabric workspace, gateway, scheduled refresh, app, REST API call, or Azure deployment is created.
-
-## Azure Reference Architecture Blueprint
-
-Validate the deployment-free Azure blueprint:
-
-```bash
-make verify-azure-blueprint
-make validate-iac
-```
-
-The blueprint lives under `infra/bicep/` and maps the local platform to Azure Event Hubs, ADLS Gen2, Azure Data Explorer, Azure Machine Learning, Azure AI Foundry, Azure AI Search, Azure Monitor, Log Analytics, Application Insights, Microsoft Purview, Power BI, and Microsoft Fabric patterns. Documentation lives under `docs/azure/`, security materials under `docs/security/`, decisions under `docs/architecture/decisions/`, and diagrams under `diagrams/azure/`.
-
-`validate-iac` runs Azure CLI Bicep build/lint only when Azure CLI is already available. No Azure login, what-if, deployment, subscription selection, or resource creation is performed by default.
-
-## Planned Analytical and ML Use Cases
-
-- Short-term electricity-demand forecasting.
-- Feeder and substation load forecasting.
-- Asset health condition scoring and maintenance prioritisation.
-- Outage prediction.
-- Anomaly detection.
-- Reliability scoring.
-- Operational monitoring and observability.
-- Retrieval-grounded grid operations assistant.
-- Power BI-ready semantic reporting outputs.
-- Maintenance prioritisation.
-- Incident investigation.
-- Executive reliability reporting.
-
-Implemented reliability measures include SAIDI, SAIFI, CAIDI, ASAI, ASUI, outage frequency, outage duration, restoration performance, and composite reliability scoring. CTAIDI and CAIFI remain unsupported because distinct interrupted customer IDs are not present in the synthetic outage records.
-
-## Repository Structure
-
-```text
-.
-├── .github/workflows/
-├── configs/
-├── dashboard/
-├── data/
-│   ├── raw/
-│   ├── interim/
-│   └── processed/
-├── diagrams/
-├── docs/
-│   ├── architecture/
-│   ├── governance/
-│   ├── operations/
-│   └── milestones/
-├── outputs/
-├── reports/
-├── scripts/
-├── src/grid_reliability/
-│   ├── common/
-│   ├── data_generation/
-│   ├── ingestion/
-│   ├── validation/
-│   ├── forecasting/
-│   ├── asset_health/
-│   ├── outage_prediction/
-│   ├── reliability/
-│   ├── anomaly_detection/
-│   ├── genai/
-│   ├── reporting/
-│   └── monitoring/
-└── tests/
-    ├── unit/
-    ├── integration/
-    └── contract/
-```
-
-## Milestone Roadmap
+## Completed Milestones
 
 1. Repository foundation and architecture scaffold.
 2. Governed synthetic energy data generation.
 3. Governed ingestion and data validation.
 4. Electricity demand forecasting.
 5. Asset health analytics.
-6. Outage prediction.
-7. Grid reliability scoring and KPI analytics.
-8. Operational monitoring and observability.
-9. GenAI Grid Operations Assistant.
+6. Leakage-safe outage prediction.
+7. Grid reliability KPI analytics.
+8. Operational monitoring and data/model observability.
+9. Local retrieval-grounded Grid Operations Assistant.
 10. Power BI-ready dashboard outputs and executive reporting.
 11. Azure reference architecture and deployment blueprint.
+12. Portfolio polish, final QA, and interview-ready documentation.
 
-## Local Setup
+Detailed milestone evidence is in [docs/milestones/roadmap.md](docs/milestones/roadmap.md).
+
+## Repository Structure
+
+```text
+.
+├── .github/workflows/          # CI and IaC blueprint validation
+├── configs/                    # Local and CI pipeline configuration
+├── dashboard/                  # Power BI-ready page specs, DAX, wireframes
+├── data/                       # Ignored generated data with .gitkeep placeholders
+├── diagrams/                   # Mermaid architecture and workflow diagrams
+├── docs/                       # Architecture, domain, Azure, security, portfolio docs
+├── infra/bicep/                # Blueprint-only Azure Bicep templates
+├── outputs/                    # Ignored generated analytical outputs
+├── reports/                    # Ignored generated Markdown/JSON reports
+├── scripts/                    # Azure blueprint and repository QA scripts
+├── src/grid_reliability/       # Local-first platform implementation
+└── tests/                      # Unit tests, fixtures, and repository QA tests
+```
+
+## Quickstart
 
 ```bash
 python -m venv .venv
@@ -361,15 +77,88 @@ make install
 make quality
 ```
 
-Configuration starts in `configs/base.yaml`. Copy `.env.example` to `.env` for local non-secret overrides. Do not commit real secrets.
+The project uses synthetic data and local files only. Configuration starts in [configs/base.yaml](configs/base.yaml). Copy [.env.example](.env.example) only for local non-secret overrides.
 
-## Quality and Governance
+## Full Local Demo
 
-The foundation uses Ruff, mypy, pytest, coverage, typed settings, deterministic tests, a documented data-classification approach, and a CI workflow that does not require Azure authentication.
+```bash
+make generate-data-ci
+make ingest-data-ci
+make forecast-data-ci
+make assess-asset-health-ci
+make predict-outages-ci
+make calculate-reliability-ci
+make monitor-platform-ci
+make run-assistant-ci
+make build-reporting-model-ci
+make verify-azure-blueprint
+```
 
-## Limitations and Current Status
+Expected generated paths include:
 
-Only Milestones 1 through 11 are implemented. The repository contains architecture scaffolding, shared foundation utilities, synthetic source data generation, governed local ingestion, local demand forecasting, local transparent asset-health analytics, local synthetic outage-risk prediction, local reliability KPI analytics, local operational observability, a local retrieval-grounded assistant with citations, local Power BI-ready reporting outputs, and a blueprint-only Azure reference architecture with Bicep templates and validation checks. Asset-failure prediction, anomaly-detection models, deployed dashboards, live external-model integrations, live alert delivery, and live Azure or Fabric infrastructure remain future work. Generated runtime datasets, model artifacts, reports, monitoring outputs, assistant outputs, reporting outputs, and Azure deployment artefacts are intentionally excluded from version control.
+- `data/raw/` for synthetic source extracts.
+- `data/interim/` for validated interim data.
+- `outputs/forecasting/`, `outputs/asset_health/`, `outputs/outage_prediction/`, `outputs/reliability/`, `outputs/monitoring/`, `outputs/genai/`, and `outputs/reporting/`.
+- `reports/ingestion/`, `reports/forecasting/`, `reports/asset_health/`, `reports/outage_prediction/`, `reports/reliability/`, `reports/monitoring/`, `reports/genai/`, and `reports/reporting/`.
+
+Clean generated artifacts before review:
+
+```bash
+make clean-data clean-interim clean-quarantine clean-ingestion-reports
+make clean-forecasting clean-model-artifacts clean-forecast-reports
+make clean-asset-health clean-asset-health-reports
+make clean-outage-prediction clean-outage-models clean-outage-reports
+make clean-reliability clean-reliability-reports
+make clean-monitoring clean-monitoring-reports
+make clean-assistant clean-assistant-reports
+make clean-reporting clean-reporting-reports clean
+```
+
+## Quality Gates
+
+```bash
+python3 -m ruff check .
+python3 -m ruff format --check .
+python3 -m mypy src
+python3 -m pytest
+python3 -m pytest --cov --cov-report=term-missing
+make verify-azure-blueprint
+make validate-iac
+make portfolio-check
+```
+
+`make validate-iac` runs Azure CLI Bicep validation only when Azure CLI is already installed. CI does not log in to Azure and does not deploy anything.
+
+## Security And Governance
+
+- All datasets are synthetic and fictional.
+- Local pipelines operate on validated interim data and governed evidence.
+- The assistant is deterministic, retrieval-grounded, citation-producing, and limited to decision support.
+- Security documentation includes a STRIDE threat model, Azure control matrix, ADRs, identity guidance, network guidance, and data governance notes.
+- Runtime artifacts, caches, model files, reports, assistant indexes, coverage outputs, local environment files, and deployment artifacts are ignored by Git.
+
+## Limitations
+
+- Azure architecture is a blueprint only and is not deployed.
+- Power BI-ready outputs are CSV, DAX text, catalogue, relationship, wireframe, and page-specification artifacts only.
+- No `.pbix`, Power BI workspace, Fabric workspace, gateway, scheduled refresh, app, or REST API call is created.
+- Models are deterministic local demonstrations over synthetic data; they are not calibrated for live grid operations.
+- Monitoring alerts are local review artifacts only and do not notify external systems.
+- The assistant cannot execute operations, suppress alerts, dispatch crews, call Azure OpenAI, call Azure AI Foundry, or call external APIs.
+
+## Interview Talking Points
+
+- Explain the system as an end-to-end governed evidence pipeline, not as a cloud deployment.
+- Walk from synthetic source data to validated interim data, analytics, monitoring, assistant evidence, and Power BI-ready outputs.
+- Emphasise leakage controls, deterministic tests, human review, decision support, and critical-infrastructure safety boundaries.
+- Describe the Azure blueprint as a target architecture with IaC and operational guidance, not proof of deployed services.
+- Use [docs/portfolio/interview-talking-points.md](docs/portfolio/interview-talking-points.md) for concise interview responses.
+
+## What This Demonstrates
+
+This repository demonstrates Azure solution architecture, Python data engineering, local MLOps patterns, time-series forecasting, classification, asset analytics, reliability engineering, governance, security, observability, GenAI/RAG safety boundaries, Power BI semantic modelling, CI/CD, Infrastructure as Code, and critical infrastructure domain understanding.
+
+Start with [docs/portfolio/reviewer-guide.md](docs/portfolio/reviewer-guide.md) for a fast review path.
 
 ## Licence
 

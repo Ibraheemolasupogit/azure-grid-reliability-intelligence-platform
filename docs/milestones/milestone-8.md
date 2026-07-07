@@ -20,6 +20,6 @@ Implemented capabilities:
 - conceptual mapping to Azure Monitor, Application Insights, Log Analytics,
   Azure Machine Learning monitoring, Microsoft Purview, and Power BI.
 
-Out of scope: live Azure telemetry, SDK connectivity, Log Analytics workspaces,
+Out of scope: Azure telemetry integration, SDK connectivity, Log Analytics workspaces,
 external alert delivery, dashboards, new models, retraining, remediation, Spark,
 Kubernetes, Terraform, Bicep, Event Hubs processing, and GenAI assistants.

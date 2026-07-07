@@ -1,25 +1,25 @@
-.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo predict-outages predict-outages-ci outage-prediction-demo calculate-reliability calculate-reliability-ci reliability-demo monitor-platform monitor-platform-ci monitoring-demo build-assistant-index run-assistant run-assistant-ci evaluate-assistant assistant-demo build-reporting-model build-reporting-model-ci validate-reporting-model reporting-demo validate-iac lint-bicep build-bicep verify-azure-blueprint azure-what-if clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean-outage-prediction clean-outage-models clean-outage-reports clean-reliability clean-reliability-reports clean-monitoring clean-monitoring-reports clean-assistant clean-assistant-reports clean-reporting clean-reporting-reports clean
+.PHONY: install format lint type-check test test-cov quality generate-data generate-data-ci ingest-data ingest-data-ci validate-data demo-ingestion-ci forecast-data forecast-data-ci forecast-demo assess-asset-health assess-asset-health-ci asset-health-demo predict-outages predict-outages-ci outage-prediction-demo calculate-reliability calculate-reliability-ci reliability-demo monitor-platform monitor-platform-ci monitoring-demo build-assistant-index run-assistant run-assistant-ci evaluate-assistant assistant-demo build-reporting-model build-reporting-model-ci validate-reporting-model reporting-demo validate-iac lint-bicep build-bicep verify-azure-blueprint portfolio-check azure-what-if clean-data clean-interim clean-quarantine clean-ingestion-reports clean-forecasting clean-model-artifacts clean-forecast-reports clean-asset-health clean-asset-health-reports clean-outage-prediction clean-outage-models clean-outage-reports clean-reliability clean-reliability-reports clean-monitoring clean-monitoring-reports clean-assistant clean-assistant-reports clean-reporting clean-reporting-reports clean
 
 install:
-	python -m pip install --upgrade pip
-	python -m pip install -e ".[dev]"
+	python3 -m pip install --upgrade pip
+	python3 -m pip install -e ".[dev]"
 
 format:
-	python -m ruff format .
-	python -m ruff check . --fix
+	python3 -m ruff format .
+	python3 -m ruff check . --fix
 
 lint:
-	python -m ruff check .
-	python -m ruff format --check .
+	python3 -m ruff check .
+	python3 -m ruff format --check .
 
 type-check:
-	python -m mypy src
+	python3 -m mypy src
 
 test:
-	python -m pytest
+	python3 -m pytest
 
 test-cov:
-	python -m pytest --cov --cov-report=term-missing
+	python3 -m pytest --cov --cov-report=term-missing
 
 quality: lint type-check test-cov
 
@@ -130,6 +130,9 @@ build-bicep: validate-iac
 
 verify-azure-blueprint:
 	bash scripts/azure/verify_blueprint.sh
+
+portfolio-check: quality verify-azure-blueprint
+	python3 scripts/verify_repository_polish.py
 
 azure-what-if:
 	@if [ -z "$(RESOURCE_GROUP)" ] || [ -z "$(PARAMETERS)" ]; then echo "Set RESOURCE_GROUP and PARAMETERS"; exit 2; fi

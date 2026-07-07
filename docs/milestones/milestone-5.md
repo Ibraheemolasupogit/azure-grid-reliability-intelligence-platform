@@ -36,6 +36,6 @@ Out of scope:
 - maintenance optimisation;
 - dashboards;
 - GenAI;
-- Azure SDK calls or live Azure deployment;
+- Azure SDK calls or Azure deployment;
 - Spark processing;
 - production engineering certification.

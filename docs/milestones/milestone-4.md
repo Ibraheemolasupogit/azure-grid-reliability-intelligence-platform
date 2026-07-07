@@ -26,4 +26,4 @@ The CI profile contains six hourly timestamps, so it supports one-interval-ahead
 
 ## Out of Scope
 
-This milestone does not implement reliability KPIs, outage prediction, asset-health scoring, anomaly-detection models, maintenance optimisation, dashboards, GenAI assistants, Azure SDK authentication, online endpoints, Terraform, Bicep, Spark, or live Azure deployment.
+This milestone does not implement reliability KPIs, outage prediction, asset-health scoring, anomaly-detection models, maintenance optimisation, dashboards, GenAI assistants, Azure SDK authentication, online endpoints, Terraform, Bicep, Spark, or Azure deployment.
