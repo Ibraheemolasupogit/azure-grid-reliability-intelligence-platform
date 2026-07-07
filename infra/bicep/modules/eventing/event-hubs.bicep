@@ -1,3 +1,4 @@
+@minLength(1)
 param baseName string
 param location string
 param allowPublicNetworkAccess bool

@@ -23,6 +23,7 @@ resource database 'Microsoft.Kusto/clusters/databases@2023-08-15' = {
   parent: cluster
   name: 'grid_reliability'
   location: location
+  kind: 'ReadWrite'
   properties: {
     softDeletePeriod: 'P30D'
     hotCachePeriod: 'P7D'

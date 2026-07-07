@@ -29,10 +29,6 @@ resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' = {
     supportsHttpsTrafficOnly: true
     allowBlobPublicAccess: false
     publicNetworkAccess: allowPublicNetworkAccess ? 'Enabled' : 'Disabled'
-    deleteRetentionPolicy: {
-      enabled: true
-      days: 14
-    }
   }
 }
 
